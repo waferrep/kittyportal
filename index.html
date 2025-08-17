@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images\icos\BASE_ICO.png" type="image/x-icon">
+    <script src="https://iframe.chat/scripts/main.min.js"></script>
+    <title>kittyportal</title>
+    
+</head>
+<body onload="displayMotd(); displaySpecies();" class="body"></body>
+<body>
+    <div class="banner-container">
+        <div class="banner">
+        <span id="banner-randomize"></span>
+        </div>
+    <div class="container">
+
+        <div class="sidebar-left">
+            <div class="site-logo">kittyportal</div>
+            <img src="images/star.png" alt="kittyportal logo" class="logo-image"> </img>
+            <div class="about-site">
+                <span>
+                    <p>welcome 2 kittyportal!</p>
+                    <p id="randomize-species"></p>
+                </span>
+            </div>
+            <div class="badges">
+                <div class="badges-content">
+                    <img src="images/badges/8015_familyguy.png" alt="family guy badge"></img>
+                    <img src="images/badges/academy_catlover.gif" alt="cat lover badge"></img>
+                    <img src="images/badges/awesome.png" alt="awesome badge"></img>
+                    <img src="images/badges/clickherebtn.gif" alt="click here badge"></img>
+                    <img src="images/badges/fuckgender.png" alt="fuck gender badge"></img>    
+                    <img src="images/badges/gay.png" alt="gay badge"></img>    
+                    <img src="images/badges/drmario.gif" alt="dr mario gay badge"></img>
+                    <img src="images/badges/internet.gif" alt="internet badge"></img>    
+                    <img src="images/badges/midimusic.gif" alt="midi music badge"></img>    
+                    <img src="images/badges/mymusic.gif" alt="my music badge"></img>    
+                    <img src="images/badges/nekoweb.gif" alt="neko web badge"></img>    
+                    <img src="images/badges/simpsons.gif" alt="simpsons badge"></img>   
+                    <img src="images/badges/sparta.gif" alt="sparta badge"></img>
+                    <img src="images/badges/spongebob.gif" alt="spongebob badge"></img>
+                    <img src="images/badges/tf2.gif" alt="tf2 badge"></img>
+                    <img src="images/badges/funnypage.gif" alt="funny page badge"></img>
+                    <img src="images/badges/crushit.gif" alt="crush capitalism badge"></img>
+
+                    <img src="images/badges/8015_familyguy.png" alt="family guy badge"></img>
+                    <img src="images/badges/academy_catlover.gif" alt="cat lover badge"></img>
+                    <img src="images/badges/awesome.png" alt="awesome badge"></img>
+                    <img src="images/badges/clickherebtn.gif" alt="click here badge"></img>
+                    <img src="images/badges/fuckgender.png" alt="fuck gender badge"></img>    
+                    <img src="images/badges/gay.png" alt="gay badge"></img>    
+                    <img src="images/badges/drmario.gif" alt="dr mario gay badge"></img>
+                    <img src="images/badges/internet.gif" alt="internet badge"></img>    
+                    <img src="images/badges/midimusic.gif" alt="midi music badge"></img>    
+                    <img src="images/badges/mymusic.gif" alt="my music badge"></img>    
+                    <img src="images/badges/nekoweb.gif" alt="neko web badge"></img>    
+                    <img src="images/badges/simpsons.gif" alt="simpsons badge"></img>   
+                    <img src="images/badges/sparta.gif" alt="sparta badge"></img>
+                    <img src="images/badges/spongebob.gif" alt="spongebob badge"></img>
+                    <img src="images/badges/tf2.gif" alt="tf2 badge"></img>
+                    <img src="images/badges/funnypage.gif" alt="funny page badge"></img>
+                    <img src="images/badges/crushit.gif" alt="crush capitalism badge"></img>
+                    
+                </div>
+            </div>
+            <div class="motd">
+                <h2 class="motd-title">message of the day</h2>
+                <span id="motd-content"></span> 
+            </div>
+            <div class="social-links">
+            <a href="https://x.com/notwafurry" class="social-item">
+                <img src="images/twitter3.png" alt="twitter">
+                <span class="social-text">twitter</span>
+            </a>
+
+            <a href="https://discordapp.com/users/146395257313951744" class="social-item">
+                <img src="images/discord3.png" alt="discord">
+                <span class="social-text">discord</span>
+            </a>
+
+            <a href="https://soundcloud.com/wafurry" class="social-item">
+                <img src="images/soundcloud3.png" alt="soundcloud">
+                <span class="social-text">soundcloud</span>
+            </a>
+            </div>
+            <div class="credits">
+                <a href="https://junes.nekoweb.org"><img src="https://junes.nekoweb.org/button.gif"><span>credit to june for spritework</span></img></a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="posts">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Started by</th>
+                            <th>Last Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> <a href=pages/aboutme.html target="blog-iframe">about me xD</a></td>
+                            <td>wafer</td>
+                            <td>8/15/2025 10:55 PM</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="sidebar-right">
+            <div class="music-player-main">
+                <div class="music-player-title">d[-_-]b  TUNES  d[-_-]b</div>
+                <h2 id="music-status">now playing:</h2>
+                <div class="music-info">
+                    <span id="music-track">no track loaded</span>
+                    <span id="music-artist">no artist loaded</span>
+                </div>
+
+                <audio id="audio"></audio>
+
+                <div class="music-player">
+                    <button id="prev">⏮</button>
+                    <button id="play">▶</button>
+                    <button id="next">⏭</button>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress"></div>
+                </div>
+                <div class="time-container">
+                    <span id="current-time">0:00</span> / 
+                    <span id="total-time">0:00</span>
+                </div>
+
+                <div class="volume-container">
+                    ♪ <input type="range" id="volume" min="0" max="1" step="0.01" value="0.02">
+                </div>
+            </div>
+            <div class="comments">
+            <div class="comments-status">Online
+                <span id="online-color">•</span>
+            </div>
+            <iframe src='https://iframe.chat/embed?chat=31318985' id='chattable' frameborder='none'></iframe>
+                <script>
+                    chattable.initialize({
+                        stylesheet : "chattable.css"
+                    });
+                </script>    
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div id="modal-overlay">
+        <div class="modal-content">
+        <button id="modal-close">✖</button>
+        <iframe id="modal-iframe" src=""></iframe>
+        </div>
+    </div>
+<script src="script.js"></script> 
+<script type="module">
+</script>
+
+</body>
+
+</html>

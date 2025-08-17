@@ -1,0 +1,131 @@
+:root {
+  --basic-bg: #2a2140;
+  --basic-dark: #1a122a;
+  --basic-light: #473a5a;
+  --text: #d0cce0;
+  --top-position: 50px;
+  --notification-sfx: ; 
+}
+
+.senderInfo {
+    font-family: 'Courier New', Courier, monospace;
+    color: limegreen;
+}
+
+.senderInfo:nth-of-type(1n) {
+    color: red;
+}
+
+.senderInfo:nth-of-type(2n) {
+    color: blue;
+}
+
+
+#top_banner{
+    visibility: hidden;
+    height: 0%;
+    width: 0%;
+}
+
+#background {
+    display: flex;
+    flex-direction: column;
+    background: var(--basic-light);
+    font-family: "Courier New", monospace;
+}
+
+.allMessages {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--text);
+    background: var(--basic-bg);
+    border: 3px solid var(--basic-light);
+    margin-left: -5px;
+    margin-top: -3px;
+    width: 98vw;
+}
+
+.allMessages.pm {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--text);
+    background: var(--basic-dark);
+    border: 3px solid var(--basic-light);
+    margin-left: -5px;
+    margin-top: -3px;
+    width: 98vw;
+}
+
+#input {
+    font-family: 'Courier New', Courier, monospace;
+    background: var(--basic-dark);
+    color: var(--text);
+    border: none;
+    border-radius: 0px;
+    padding: 5px;
+    margin-left: 5px;
+    width: 88vw;
+    height: 7vh;
+}
+
+#input:empty::before{
+    content: "Type your message here";
+    color: var(--text);
+    display: flex;
+    background: var(--basic-dark);
+    align-items: center;
+}
+
+#emojiTrayToggle, #emojiTray {
+    visibility: hidden;
+    height: 0%;
+    width: 0%;
+}
+
+#timestamp {
+    margin-left: 5px;
+    color: var(--text);
+    font-size: 8px;
+    display: inline-flex;
+    background: #1a122a17;
+}
+
+#settings {
+  filter: invert(100%);
+}
+
+
+.owner{
+    background-color: teal;
+}
+
+.ctxMenuOption{
+    background-color: var(--basic-light);
+}
+
+#settingsMenu{
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #473a5a7a;
+    color: var(--text);
+}
+
+#settingsMenu a{
+    color: #24173f
+}
+
+#closeSettingsBtn
+{
+  background: var(--basic-dark);
+  border: 3px double var(--basic-light);
+  color: var(--text);
+
+}
+
+.highlight{
+    animation: none;
+    background-color: #46355fc4
+}
+
+#is_typing{
+    visibility: hidden;
+}
+
+
