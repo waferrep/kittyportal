@@ -166,7 +166,7 @@ var motds = [
   "Some cats can meow 9,999,999,999 times a second (or more)",
   "(meeting god in horse heaven) No you look great i just didnt think youd be a horse",
   "I Can Do That!",
-  "Me: Dawg have you seen my Talisman? Bro, after jump 70 feet: havent seen it 😃 How could you ₐₛₖ ₘₑ ₛₒₘₑₜₕᵢₙ ₗᵢₖₑ ₜₕₐₜ",
+  "Me: Dawg have you seen my Talisman? Bro, jumping 70 feet: havent seen it 😃",
   "Pet Pet Pet Pet Pet Pet Pet Pet Pet Pet Pet wafer",
   "I think gangnam style is the best music video ever actually",
   "hi my name is Mother Fucker and i like B##Bs",

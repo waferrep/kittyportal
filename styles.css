@@ -104,11 +104,11 @@ table {
   border-collapse: collapse;
   font-family: "Courier New", monospace;
   border: 3px double var(--basic-light);
+  
 }
 
 table th,
 table td {
-  border: 1px solid var(--basic-bg);
   padding: 12px;
   background: var(--basic-dark);
   text-align: left;
@@ -117,13 +117,13 @@ table td {
 table th {
   background: var(--basic-light);
   font-size: 20px;
-  border: 1px solid var(--basic-bg);
 }
 
 table td {
   font-size: 16px;
   color: var(--text);
   height: 40px;
+  border: 1px solid var(--basic-bg);
 }
 
 table a {
@@ -583,7 +583,7 @@ table a:hover {
 }
 
 .blog-container td{
-  background: #2a2140ec;
+  background: #2a2140fa;
 }
 
 .blog-container th {
@@ -617,7 +617,7 @@ table a:hover {
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  background: #2a2140ec;
+  background: #2a2140fa;
   border: 3px double var(--basic-light);
   border-top: none;
 }
@@ -706,7 +706,7 @@ table a:hover {
   padding: 4px;
 }
 
-.maxwell-cell span{
+.maxwell-cell a{
   text-decoration: underline;
   color: var(--text);
   text-decoration-style: dotted;
@@ -714,6 +714,25 @@ table a:hover {
   text-decoration-color: #d0cce0a2;
 }
 
-.maxwell-cell a{
+.site-logo a {
   text-decoration: none;
+  color: var(--text);
+}
+
+.site-logo a:hover{
+  color: var(--basic-light);
+}
+
+.pinned-msg{
+  background: red;
+  font-weight: bold;
+  border-left: 6px red;
+}
+
+.blog-inside-link {
+  text-decoration: underline;
+}
+
+.signature{
+  color: rgb(0, 167, 167);
 }
