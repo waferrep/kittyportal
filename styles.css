@@ -103,6 +103,7 @@ table {
   table-layout: fixed;
   border-collapse: collapse;
   font-family: "Courier New", monospace;
+  border: 3px double var(--basic-light);
 }
 
 table th,
@@ -122,11 +123,19 @@ table th {
 table td {
   font-size: 16px;
   color: var(--text);
+  height: 40px;
 }
 
 table a {
   color: var(--text);
   text-decoration: none;
+}
+
+table span {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 4px;
+  text-decoration-color: #d0cce0a2;
 }
 
 table a:hover {
@@ -206,6 +215,7 @@ table a:hover {
   gap: 6px;
   font-size: 14px;
   color: #fff;
+  justify-content: space-between;
 }
 
 #volume {
@@ -237,6 +247,29 @@ table a:hover {
   cursor: pointer;
 }
 
+.loop-button {
+  display: flex;
+  justify-content: between;
+}
+
+#loop {
+  background: var(--basic-dark);
+  color: var(--text);
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  padding: 2px 20px;
+  border: 2px solid var(--basic-light);
+  cursor: pointer;
+}
+
+#loop:hover{
+  background: var(--basic-bg);
+}
+
+#loop.active{
+  color: rgba(255, 143, 199, 0.76);
+}
+
 .music-info span{
   text-align: center;
   font-family: "Comic Sans", monospace;
@@ -256,7 +289,7 @@ table a:hover {
 }
 
 .music-player button:hover {
-  background: var(--basic-light);
+  background: var(--basic-bg);
 }
 
 .music-player button:active {
@@ -513,4 +546,170 @@ table a:hover {
 
 .credits :hover{
   background: #473a5a;
+}
+
+/* This is all blog page stuff. */
+
+.blog-container {
+  max-width: 100%;
+  flex-direction: column;
+  min-height: 200px;
+  Padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-container table {
+  width: 100%;
+  table-layout: fixed;
+  border: 3px double var(--basic-light);
+  border-bottom: none;
+  
+}
+
+.blog-container th:first-child {
+  width: 120px;
+  border: none;
+}
+
+
+.blog-container th,
+.blog-container td {
+  padding: 10px;
+  vertical-align: top;
+  border: none;
+  
+}
+
+.blog-container td{
+  background: #2a2140ec;
+}
+
+.blog-container th {
+  text-align: left;
+  padding: 10px;
+}
+
+.blog-top-bar {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.profile-picture{
+  display: flex;
+  height: 80px;
+  width: 80px;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(-1px 0px 11px black);
+}
+
+.blog-cell{
+  color: var(--text);
+  padding: 10px;
+  font-size: 14px;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.footer-cell{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: #2a2140ec;
+  border: 3px double var(--basic-light);
+  border-top: none;
+}
+
+.footer-cell a{
+  text-decoration: underline;
+  color: var(--text);
+  text-decoration-style: dotted;
+  text-underline-offset: 4px;
+  text-decoration-color: #d0cce0a2;
+}
+
+#maxwell{
+  height: 240px;
+}
+
+.username{
+  text-align: center;
+  justify-content: center;
+}
+
+.username-inner {
+  display: flex;
+  flex-direction: column;
+
+  text-align: center;
+}
+
+.username-header
+{
+  display: grid;
+  grid-template-areas: "a b c";
+  grid-template-columns: 1fr 1fr 1px;
+  padding-top: 10px;
+}
+
+.mood-status{
+  align-items: center;
+  text-align: left;
+  justify-content: center;
+  grid-area: a;
+  
+}
+
+.mood-picture-15px
+{
+  grid-area: b;
+  display: block;
+  margin-top: 15px;
+  padding: 2px;
+}
+
+.mood-picture-25px
+{
+  grid-area: b;
+  display: block;
+  margin-top: 5px;
+  padding: 2px;
+  height: 25px;
+}
+
+#maxwell-audio{
+  width: 0px;
+  visibility: hidden;
+}
+
+.cat-foot{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-image: url("pages/blog/maxwell/creepy.png");
+}
+
+
+.spinning-cat {
+  display: flex;
+  align-items: center;     
+  justify-content: center; 
+  flex: 1;
+  width: 100%;
+}
+
+.maxwell-cell{
+  display: flex;
+  justify-content: space-between;
+  padding: 4px;
+}
+
+.maxwell-cell a{
+  text-decoration: underline;
+  color: var(--text);
+  text-decoration-style: dotted;
+  text-underline-offset: 4px;
+  text-decoration-color: #d0cce0a2;
 }

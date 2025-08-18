@@ -2,6 +2,7 @@
 //modal
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("modal-overlay");
+  const maxwell = document.getElementById("maxwell")
   const modalIframe = document.getElementById("modal-iframe");
   const closeBtn = document.getElementById("modal-close");
 
@@ -27,7 +28,16 @@ document.addEventListener("DOMContentLoaded", () => {
       modalIframe.src = "";
     }
   });
+
+  // close on maxell
+  if (maxwell) {
+    maxwell.addEventListener("click", () => {
+      modal.style.display = "none";
+      modalIframe.src = "";
+    });
+  }
 });
+
 
 
 //music stuff
@@ -96,11 +106,6 @@ audio.addEventListener("timeupdate", (e) => {
   progress.style.width = `${percent}%`;
 });
 
-audio.addEventListener("ended", () => {
-  songIndex = (songIndex + 1) % songs.length; // loop back to start
-  loadSong(songIndex);
-  playSong();
-});
 
 progressContainer.addEventListener("click", (e) => {
   const width = progressContainer.clientWidth;
@@ -119,6 +124,22 @@ volumeSlider.addEventListener("input", () => {
   audio.volume = volumeSlider.value;
 });
 
+const loopButton = document.getElementById("loop")
+let isLooping = false;
+
+loopButton.addEventListener("click", () => {
+  isLooping = !isLooping;
+  audio.loop = isLooping;
+  loopButton.classList.toggle("active", isLooping);
+});
+
+audio.addEventListener("ended", () => {
+  if (!audio.loop) {
+    songIndex = (songIndex + 1) % songs.length; // loop back to start
+    loadSong(songIndex);
+    playSong();
+  }
+});
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60) || 0;
@@ -145,7 +166,7 @@ var motds = [
   "Some cats can meow 9,999,999,999 times a second (or more)",
   "(meeting god in horse heaven) No you look great i just didnt think youd be a horse",
   "I Can Do That!",
-  "Me: Dawg have you seen my Talisman? Bro, after jump 70 feet in air: havent seen it 😃 How could you ₐₛₖ ₘₑ ₛₒₘₑₜₕᵢₙ ₗᵢₖₑ ₜₕₐₜ",
+  "Me: Dawg have you seen my Talisman? Bro, after jump 70 feet: havent seen it 😃 How could you ₐₛₖ ₘₑ ₛₒₘₑₜₕᵢₙ ₗᵢₖₑ ₜₕₐₜ",
   "Pet Pet Pet Pet Pet Pet Pet Pet Pet Pet Pet wafer",
   "I think gangnam style is the best music video ever actually",
   "hi my name is Mother Fucker and i like B##Bs",
@@ -306,17 +327,4 @@ setRandomPhrase();
 
 banner.addEventListener("animationiteration", setRandomPhrase);
 
-var colors = [
-  "red",
-  "teal",
-  "aqua",
-  "coral",
-  "darkgreen",
-  "deeppink",
-  "gold",
-  "indigo",
-  "lightblue",
-  "yellow"
-]
-
-//hi 
+//

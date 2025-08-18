@@ -32,7 +32,7 @@
     border: 3px solid var(--basic-light);
     margin-left: -5px;
     margin-top: -3px;
-    width: 98vw;
+    width: 100%;
 }
 
 .allMessages.pm {
@@ -119,4 +119,8 @@
     visibility: hidden;
 }
 
-
+#replyBanner
+{
+    color: var(--text);
+    background: #1a122a86;
+}

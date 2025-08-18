@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title>404</title>
+</head>
+<body>
+
+<style>
+    html, body {
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font: 13px/1.2 Tahoma, Verdana, Arial, sans-serif;
+        color: var(--text);
+        background-image: url('pages/blog/maxwell/creepy.png');
+        background-size: cover;
+        font-size: 14px;
+    }
+
+</style>
+
+<div class="cat-foot">
+    
+    <div class="spinning-cat">
+        <audio controls autoplay loop id="maxwell-audio">
+            <source src="blog/maxwell/y2k.mp3">
+            Your browser does not support the audio element.
+        </audio>
+        <img src="blog/maxwell/spinning-maxwell.gif" alt="kitty!" id="maxwell">
+    </div>
+
+    <div class="maxwell-cell"> 
+        <a href="" id="previous-href"><span class="nav-bar-prev">⟵ Previous</span></a>
+        <a href="" id="next-href"><span class="nav-bar-next">Next ⟶</span></a>
+    </div>
+
+    <!-- JS-->
+    <script>
+        var audiomaxwell = document.getElementById("maxwell-audio")
+        audiomaxwell.volume = 0.02;
+    </script>
+    
+    <script src="script-blog.js"> </script> 
+
+</div>
+
+</body>
+</html>
