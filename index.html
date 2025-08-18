@@ -133,6 +133,7 @@
 
                     </tbody>
                 </table>
+                <div id="blog-count" class="blog-count"></div>
             </div>
         </div>
 
@@ -170,13 +171,42 @@
                 </div>
             </div>
             <div class="comments">
-            <div class="comments-status">Online
+            <div class="comments-status">
+                Online <span id="online-count" class="clickable">(0)</span>
                 <span id="online-color">•</span>
             </div>
+            <ul id="online-users" style="display: none;"></ul>
+
+            <ul id="online-users" style="display: none;"></ul>
             <iframe src='https://iframe.chat/embed?chat=31318985' id='chattable' frameborder='none'></iframe>
                 <script>
                     chattable.initialize({
                         stylesheet : "chattable.css"
+                        
+                    });
+
+                    const onlineUsersElement = document.getElementById("online-users");
+                    const onlineCount = document.getElementById("online-count");
+
+                    let isExpanded = false;
+
+                    onlineCount.addEventListener("click", () => {
+                    isExpanded = !isExpanded;
+                    onlineUsersElement.style.display = isExpanded ? "block" : "none";
+                    });
+
+                    chattable.on("connection", function (list) {
+                    onlineUsersElement.innerHTML = "";
+
+                    const userList = Object.values(list);
+                    onlineCount.textContent = `(${userList.length})`;
+
+                    userList.forEach((name) => {
+                        const item = document.createElement("li");
+                        item.textContent = name;
+                        item.classList.add("list-item");
+                        onlineUsersElement.appendChild(item);
+                        });
                     });
                 </script>    
             </div>

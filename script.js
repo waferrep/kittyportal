@@ -303,7 +303,7 @@ const phrases = [
   "the game",
   "Unregistered HyperCam 2",
   "WHO WAS PHONE?",
-  'My Life Is Over \(^o^)/',
+  "My Life Is Over \\(^o^)/",
   "Yeah well..... you're gay!!",
   "le derp",
   "twelve seconds later",

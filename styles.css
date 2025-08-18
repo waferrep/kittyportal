@@ -104,6 +104,9 @@ table {
   border-collapse: collapse;
   font-family: "Courier New", monospace;
   border: 3px double var(--basic-light);
+  border-collapse: separate;
+  border-spacing: 0;
+
   
 }
 
@@ -748,4 +751,40 @@ table a:hover {
     width: 100%;
     object-fit: cover;
     display: block;   
+}
+
+#online-status {
+  cursor: pointer;
+  user-select: none;
+}
+
+#online-users {
+  margin: 0;
+  padding: 6px 12px;
+  list-style-position: inside;
+  list-style-type: disc;
+  background: var(--basic-dark);
+  border: 3px double var(--basic-light);
+  border-top: none;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+#online-users li {
+  padding: 2px 0;
+  font-size: 14px;
+  list-style: inherit;
+}
+
+#online-count {
+  text-decoration: underline;
+}
+
+#online-count.clickable {
+  cursor: pointer;
+}
+
+#online-count.clickable:hover {
+  text-decoration: underline;
+  color: var(--basic-light);
 }
