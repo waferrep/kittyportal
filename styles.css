@@ -736,3 +736,16 @@ table a:hover {
 .signature{
   color: rgb(0, 167, 167);
 }
+
+
+.trollface {
+    height: 100%;
+    width: 100%;
+}
+
+.trollface img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;   
+}
