@@ -706,10 +706,14 @@ table a:hover {
   padding: 4px;
 }
 
-.maxwell-cell a{
+.maxwell-cell span{
   text-decoration: underline;
   color: var(--text);
   text-decoration-style: dotted;
   text-underline-offset: 4px;
   text-decoration-color: #d0cce0a2;
+}
+
+.maxwell-cell a{
+  text-decoration: none;
 }
