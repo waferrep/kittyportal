@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             nextHref.href = nextBlog;
         }
         else{
-            nextHref.style.display = "none";
+            nextHref.href = "undefined.html";
         }
 
     }
@@ -57,6 +57,23 @@ document.addEventListener("DOMContentLoaded", () => {
     header.addEventListener("click", () => {
       section.classList.toggle("expanded");
     });
+  }
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const countTarget = document.getElementById("commentCount");
+
+  function updateCommentCount() {
+    const commentList = document.querySelectorAll("#comments_list > .comment");
+    if (countTarget && commentList.length >= 0) {
+      countTarget.textContent = `(${commentList.length})`;
+    }
+  }
+  const commentBox = document.getElementById("HCB_comment_box");
+  if (commentBox) {
+    const observer = new MutationObserver(updateCommentCount);
+    observer.observe(commentBox, { childList: true, subtree: true });
   }
 });
 

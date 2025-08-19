@@ -205,7 +205,9 @@
                     chattable.on("connection", function (list) {
                     onlineUsersElement.innerHTML = "";
 
-                    const userList = Object.values(list);
+                    let userList = Object.values(list);
+
+                    userList.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
                     onlineCount.textContent = `(${userList.length})`;
 
                     userList.forEach((name) => {

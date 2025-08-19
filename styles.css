@@ -22,7 +22,7 @@ body {
 
 .banner-container {
   display: grid;
-  grid-template-rows: var(--top-position) 1fr;
+  grid-template-rows: 40px 1fr;
   grid-template-columns: 200 px 1fr 250px;
   flex-direction: column;
   min-height: 100vh;
@@ -738,10 +738,9 @@ table a:hover {
   color: var(--basic-light);
 }
 
-.pinned-msg{
-  background: red;
+.pinned-msg td {
+  border-bottom: 3px solid var(--basic-bg);
   font-weight: bold;
-  border-left: 6px red;
 }
 
 .blog-inside-link {
@@ -1076,6 +1075,13 @@ a #hcb_settings {
   background: var(--basic-bg);
 }
 
+::-webkit-scrollbar-corner {
+  background: var(--basic-dark);
+  border: 2px solid var(--basic-light);
+  box-shadow: inset 2px 2px var(--basic-bg),
+              inset -2px -2px var(--basic-light);
+}
+
 #HCB_comment_box .comment {
   border: 1px solid var(--basic-light);
   background: #2a2140fa;
@@ -1086,4 +1092,9 @@ a #hcb_settings {
 #HCB_comment_box div[id^="replies_"] .comment {
   background: #1a122afa;
   margin-left: 4px;
+}
+
+#HCB_comment_box .likes {
+  color: var(--text);
+  font-family:'Courier New', Courier, monospace;
 }

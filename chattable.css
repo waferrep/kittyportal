@@ -51,8 +51,6 @@
     color: var(--text);
     border: none;
     border-radius: 0px;
-    padding: 5px;
-    margin-left: 5px;
     width: 88vw;
     height: 7vh;
 }
@@ -82,7 +80,6 @@
 #settings {
   filter: invert(100%);
 }
-
 
 .owner{
     background-color: teal;
