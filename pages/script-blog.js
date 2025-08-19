@@ -49,3 +49,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const header = document.getElementById("commentHeader");
+  const section = document.getElementById("commentToggle");
+
+  if (header && section) {
+    header.addEventListener("click", () => {
+      section.classList.toggle("expanded");
+    });
+  }
+});
+
+

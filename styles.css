@@ -623,6 +623,7 @@ table a:hover {
   background: #2a2140fa;
   border: 3px double var(--basic-light);
   border-top: none;
+  font-family:'Courier New', Courier, monospace;
 }
 
 .footer-cell a{
@@ -737,7 +738,11 @@ table a:hover {
 }
 
 .signature{
-  color: rgb(0, 167, 167);
+  color: rgba(255, 143, 199);
+}
+
+.blog-top-bar a{
+  color: teal;
 }
 
 
@@ -787,4 +792,283 @@ table a:hover {
 #online-count.clickable:hover {
   text-decoration: underline;
   color: var(--basic-light);
+}
+
+.comment-section {
+  background: #2a2140fa; 
+  border: 3px double var(--basic-light);
+  border-top: none;
+  padding: 12px;
+  margin-top: 0;
+  font-family: "Courier New", monospace;
+  color: var(--text);
+}
+
+#HCB_comment_box {
+  background: #1a122afa !important;
+  padding: 10px;
+  border: 3px double var(--basic-light);
+  font-family: "Courier New", monospace;
+  color: var(--text);
+}
+
+#HCB_comment_box h3,
+#HCB_comment_box .hcb-comment-tb {
+  color: var(--text) !important;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 20px !important;
+}
+
+#HCB_comment_box #HCB_comment_form_box{
+  padding-bottom: 0px !important;
+}
+
+
+#HCB_comment_box input,
+#HCB_comment_box textarea {
+  background: #2a2140fa !important;
+  border: 1px solid var(--basic-light) !important;
+  color: var(--text) !important;
+  font-family: "Courier New", monospace;
+}
+
+#HCB_comment_box input[type=submit] {
+  background: var(--basic-dark) !important;
+  border: 2px solid var(--basic-light) !important;
+  font-family:'Courier New', Courier, monospace !important;
+  color: var(--text) !important;
+  cursor: pointer;
+}
+
+#HCB_comment_box {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#HCB_comment_box input[type=submit]:hover {
+  font-family:'Courier New', Courier, monospace !important;
+  background: var(--basic-bg) !important;
+}
+
+#HCB_comment_box .btn.btn-secondary { 
+  background: var(--basic-dark) !important;
+  border: 2px solid var(--basic-light) !important;
+  color: var(--text) !important;
+  font-family:'Courier New', Courier, monospace !important;
+  cursor: pointer;
+}
+
+#HCB_comment_box .btn.btn-secondary:hover {
+  background: var(--basic-bg) !important;
+  font-family:'Courier New', Courier, monospace !important;
+}
+
+#HCB_comment_box .home-desc
+{
+  display: none;
+}
+
+.hcb-icon {
+  display: none;
+}
+
+a #hcb_settings {
+  display: none;
+}
+
+
+#comments-list
+{
+  display: none !important;
+}
+
+#HCB_comment_box blockquote,
+#HCB_comment_box .hcb-comment-body,
+#HCB_comment_box .author-name,
+#HCB_comment_box .date {
+  font-family: "Courier New", monospace !important;
+  font-size: 14px !important; /
+}
+
+#HCB_comment_box .author-name{
+  font-weight: bold;
+}
+
+#HCB_comment_box #comments_list #no_comments {
+  display: none !important;
+}
+
+#HCB_comment_box #hcb_subscribe {
+    display: none !important;
+}
+
+#HCB_comment_box #hcb_settings {
+    display: none !important;
+}
+
+#HCB_comment_box textarea {
+  resize: none !important;
+}
+
+#HCB_comment_box .hcb-comment-tb button{
+  font-family: "Courier New", monospace;
+  color: rgba(255, 143, 199);
+}
+
+
+#HCB_comment_box .hcb-reply, #HCB_comment_box .hcb-like, #HCB_comment_box .hcb-flag{
+  font-size: 0 !important;
+  color: transparent !important;
+  display: inline-block;
+  position: relative;
+  margin-right: 6px;
+}
+
+#HCB_comment_box .hcb-reply::before {
+  content: "Reply";
+  font-size: 14px !important;
+  color: rgba(255, 143, 199);
+    margin-right: 6px;
+}
+
+#HCB_comment_box .hcb-flag::before {
+  content: "Flag";
+  font-size: 14px !important;
+  color: rgba(255, 143, 199);
+      margin-right: 6px;
+}
+
+#HCB_comment_box .hcb-like::before {
+  content: "Like";
+  font-size: 14px !important;
+  color: rgba(255, 143, 199);
+      margin-right: 6px;
+}
+
+#HCB_comment_box .hcb-reply::before {
+  content: "Reply";
+  font-size: 14px !important;
+  color: rgba(255, 143, 199);
+    margin-right: 6px;
+}
+
+#HCB_comment_box .hcb-flag::before {
+  content: "Flag";
+  font-size: 14px !important;
+  color: rgba(255, 143, 199);
+      margin-right: 6px;
+}
+
+#HCB_comment_Box .author-name {
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+#HCB_comment_box .hcb-like:hover::before,
+#HCB_comment_box .hcb-reply:hover::before,
+#HCB_comment_box .hcb-flag:hover::before {
+  color: var(--basic-light) !important; 
+}
+
+
+#HCB_comment_box .hcb-comment-tb button:hover{
+  color: var(--basic-light) !important;
+}
+
+#HCB_comment_box #hcb_form{
+  margin: 0 !important;
+  padding: 0;
+}
+
+#HCB_comment_box h3{
+  display: none;
+}
+#HCB_comment_box #hcb_form_content {
+  color: var(--text) !important;
+}
+#HCB_comment_box #hcb_form_content, #HCB_comment_box #hcb_form_content::placeholder {
+  font-family:'Courier New', Courier, monospace !important;
+}
+
+#HCB_comment_box #hcb_form_name, #HCB_comment_box #hcb_form_name::placeholder {
+  color: var(--text) !important;
+  font-family:'Courier New', Courier, monospace !important;
+}
+
+#HCB_comment_box .hcb-link.del {
+  font-size: 10px !important;
+  font-family: "Courier New", monospace !important;
+  opacity: 0.7 !important;
+  color: var(--text) !important;  
+  cursor: pointer;
+}
+
+#HCB_comment_box .hcb-link.del img {
+  display: none !important;
+}
+
+#HCB_comment_box .hcb-link.del::after {
+  content: "Delete";
+  color: var(--text) !important;  
+}
+
+#HCB_comment_box #hcb_msg{
+  display: none !important;
+}
+
+#commentToggle .comment-content {
+  display: none;
+}
+
+#commentToggle.expanded .comment-content {
+  display: block;
+}
+
+#commentHeader .comment-text {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 4px;
+  text-decoration-color: #d0cce0a2;
+  color: var(--text);
+  cursor: pointer;
+}
+
+#commentHeader:hover .comment-text {
+  color: var(--basic-light);
+}
+
+
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--basic-dark);
+  border: 2px solid var(--basic-light);
+  box-shadow: inset 2px 2px var(--basic-bg),
+              inset -2px -2px var(--basic-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--basic-light);
+  border: 2px solid var(--basic-dark);
+  box-shadow: inset 2px 2px var(--basic-dark),
+              inset -2px -2px var(--basic-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--basic-bg);
+}
+
+#HCB_comment_box .comment {
+  border: 1px solid var(--basic-light);
+  background: #2a2140fa;
+  padding: 6px 8px;
+  margin: 6px 0;
+}
+
+#HCB_comment_box div[id^="replies_"] .comment {
+  background: #1a122afa;
+  margin-left: 4px;
 }

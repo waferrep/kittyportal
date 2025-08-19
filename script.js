@@ -326,5 +326,3 @@ function setRandomPhrase() {
 setRandomPhrase();
 
 banner.addEventListener("animationiteration", setRandomPhrase);
-
-//
