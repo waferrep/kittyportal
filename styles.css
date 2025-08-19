@@ -857,6 +857,10 @@ table a:hover {
   font-family: 'Courier New', Courier, monospace;
 }
 
+#HCB_comment_box #replying_to_container {
+  font-family: 'Courier New', Courier, monospace;
+}
+
 #HCB_comment_box input[type=submit]:hover {
   font-family:'Courier New', Courier, monospace !important;
   background: var(--basic-bg) !important;
