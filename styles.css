@@ -683,6 +683,17 @@ table a:hover {
   height: 25px;
 }
 
+.mood-picture-25px-33wide
+{
+  grid-area: b;
+  display: block;
+  margin-top: 5px;
+  padding: 2px;
+  height: 25px;
+  width: 33px;
+}
+
+
 #maxwell-audio{
   width: 0px;
   visibility: hidden;
