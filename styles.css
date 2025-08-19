@@ -1038,7 +1038,7 @@ a #hcb_settings {
   display: block;
 }
 
-#commentHeader .comment-text {
+#commentHeader .comment-text{
   text-decoration: underline;
   text-decoration-style: dotted;
   text-underline-offset: 4px;
@@ -1047,8 +1047,9 @@ a #hcb_settings {
   cursor: pointer;
 }
 
-#commentHeader:hover .comment-text {
+#commentHeader:hover .comment-text, #commentHeader:hover #commentCount {
   color: var(--basic-light);
+  cursor: pointer;
 }
 
 
