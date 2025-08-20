@@ -63,10 +63,15 @@
     align-items: center;
 }
 
-#emojiTrayToggle, #emojiTray {
-    visibility: hidden;
-    height: 0%;
-    width: 0%;
+#emojiTrayToggle{
+  filter: invert(100%);
+}
+
+#emojiTray {
+    font-family: 'Courier New', Courier, monospace;
+    background: var(--basic-bg);
+    color: var(--text);
+    border: 1px solid var(--basic-dark);
 }
 
 #timestamp {

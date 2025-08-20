@@ -343,3 +343,29 @@ function setRandomPhrase() {
 setRandomPhrase();
 
 banner.addEventListener("animationiteration", setRandomPhrase);
+
+function formatDate(date) {
+  const datePart = date.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  });
+
+  const timePart = date.toLocaleTimeString(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true
+  });
+
+  return `${datePart} ${timePart}`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".post-date").forEach(cell => {
+    const utcString = cell.dataset.utc;
+    if (utcString) {
+      const localDate = new Date(utcString); // parse UTC properly
+      cell.textContent = formatDate(localDate);
+    }
+  });
+});
