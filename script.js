@@ -48,8 +48,10 @@ const songs = [
   { name: "APPLE", artist: "Sheena Ringo", url: "music/apple.mp3"},
   { name: "Rude Buster", artist: "Toby Fox", url: "music/rudebuster.mp3"},
   { name: "N", artist: "subeteanatanoseidesu", url: "music/cxxii.mp3"},
-  { name: "  Ur body's my party", artist: "xaev", url: "music/bodyparty.mp3"},
+  { name: "Ur body's my party", artist: "xaev", url: "music/bodyparty.mp3"},
   { name: "The Third Sanctuary", artist: "Toby Fox", url: "music/thirdsanctuary.mp3"},
+  { name: "Menu/Options Screen", artist: "Richard Jacques", url: "music/sonic-r-options.mp3"},
+  { name: "JACK DA FUNK", artist: "HIDEKI NAGANUMA", url: "music/jackdafunk.mp3"},
 ];
 
 let songIndex = 0;
@@ -182,7 +184,16 @@ var motds = [
   "this website was made with 2 paws and a keyboard",
   "What is Milk What Is Milk What is Milk",
   "click on every link on this website",
-  "my name is xxtentacion and i like to scream"
+  "my name is xxtentacion and i like to scream",
+  "its like the internet but for cats",
+  "send a hello in chat :3",
+  "try clicking on the 'click here' button",
+  "no. seriously. this is the only message of the day",
+  "powered by hamsters!",
+  "Flash plugin is required to display this content",
+  "leaving a nice comment gives me $1,000,0000,0000,000",
+  "asriel kills the world!",
+  '"R" is it.'
 ]
 
 function displayMotd() {
@@ -314,7 +325,13 @@ const phrases = [
   "charlieeeeeeee",
   "i herd u liek mudkipz",
   "NOPE!",
-  "ᓚ₍ ^. .^₎ᓚ₍ ^. .^₎ᓚ₍ ^. .^₎"
+  "ᓚ₍ ^. .^₎ᓚ₍ ^. .^₎ᓚ₍ ^. .^₎",
+  "╾━╤デ╦︻<₍^. .^₎⟆",
+  "this is my happy face :)",
+  "(>^_^)> pirate everything!",
+  "try not to laugh challenge",
+  "Flash plugin is required to display this content",
+  "pwned"
 ];
 
 
