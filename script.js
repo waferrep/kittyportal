@@ -344,6 +344,8 @@ setRandomPhrase();
 
 banner.addEventListener("animationiteration", setRandomPhrase);
 
+
+//format date
 function formatDate(date) {
   const datePart = date.toLocaleDateString(undefined, {
     year: "numeric",
@@ -364,8 +366,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".post-date").forEach(cell => {
     const utcString = cell.dataset.utc;
     if (utcString) {
-      const localDate = new Date(utcString); // parse UTC properly
+      const localDate = new Date(utcString); 
       cell.textContent = formatDate(localDate);
     }
   });
 });
+

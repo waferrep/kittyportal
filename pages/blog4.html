@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title>kittyplace - wafer activities</title>
+</head>
+<body>
+    <div class="blog-container">
+        <table class="blog-top-bar">
+            <thead> 
+                <tr> <!--Author & Topic-->
+                    <th>author</th>
+                    <th>topic: level 22</th>
+                </tr>
+            </thead>
+        <tbody>
+            <tr> <!--Username, PFP, Mood-->
+                <td rowspan="2" class="username">
+                    <div class="username-inner">
+                    <img src="blog\logo.png" alt="pfp" height=100 width=100 class="profile-picture"></img>
+                    <div class="username-header">
+                        <p class="mood-status">
+                            wafer
+                        </p>
+                        <img src="blog\moods\hbday.gif" alt="angel gif" height=15 width=25 class="mood-picture-81px-26wide">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <!--Blog Content-->
+                <td class="blog-cell">
+                <p>
+                    soooo. ive made it to 22. this feels weird i think. when i turned 20, i didn't have plans to make it to 22. i was sure that i'd be dead before my birthday, but, here i am. and i think i'm happy about that.</p>
+                <p>
+                    this year has been okay. there's a few notable things i can list off...</p>
+                <p><ul> 
+                    <li>got back together with my <a href="https://x.com/midwestwoofs">partner</a>, whom i love very much and am going to marry.</li>
+                    <li>bought a brand new car! <small>this was my worst financial decision ever.</small></li>
+                    <li>got laid off, but the opportunities are plentiful, or so they say.</li>
+                    <li>almost finished an album! im really excited to show more of it off as i complete it :>! as a treat, you can listen to this snippet: 
+                    <div class="compact-audio">
+                    <button id="snippet-play">▶</button>
+                        <div class="compact-progress">
+                            <div class="compact-progress-bar" id="snippet-progress"></div>
+                        </div>
+                        <span class="compact-time">
+                            <span id="snippet-current">0:00</span> /
+                            <span id="snippet-total">0:00</span>
+                        </span>
+                        <input type="range" id="snippet-volume" min="0" max="1" step="0.01" value="1">
+                        <audio id="snippet-audio">
+                            <source src="/pages/blog/misc/waferpreview.mp3" type="audio/mpeg">
+                        </audio>
+                    </div>
+                <p>
+                    supposedly i'm accomplished for my age! i don't really know and i don't feel that way. i'm just a cat who does things and i guess they work out okay for me.</p>
+                <p>
+                    alas.. im not sure what the future holds! i think i'll be okay, and i have a lot of people i care for that also care about me. which is good. if you're one of those people, thank you, i love you. </p>
+                <p>
+                    please don't provide any birthday wishes; though thank you for the thoughts. if you really want to celebrate  , you can click the button below <img src="/pages/blog/moods/wink.gif" alt="wink gif"> </p>
+                <p>   <button id="confetti-btn" class="confetti-btn">🎉 celebrate 🎉</button><canvas id="confetti-canvas"></canvas> </p>
+                <audio id="clown-sound" src="/pages/blog/misc/clown-honk.mp3" preload="auto"></audio>
+                <p class="signature">
+                    ~ all kitties go to heaven ~
+                </p>
+                </td>
+            </tr>
+        </tbody>
+        
+        </table>
+
+            <div class="comment-section" id="commentToggle">
+                <h3 id="commentHeader"> 
+                    <span class="comment-text">Comments ▹</span>
+                    <span id="commentCount">(0)</span>
+                </h3>
+                
+                <div class="comment-content" id="commentContent">
+                    <!-- begin wwww.htmlcommentbox.com -->
+                    <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Comment Box</a> is loading comments...</div>
+                    <link rel="stylesheet" type="text/css" href="https://www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
+                    <script type="text/javascript" id="hcb">
+                    if(!window.hcb_user){hcb_user={};}
+                    (function(){
+                        var s=document.createElement("script"),
+                            l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"),
+                            h="https://www.htmlcommentbox.com";
+                        s.setAttribute("type","text/javascript");
+                        s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&mod=%241%24wq1rdBcg%24x73W3YcaoYbinYvHdZlNL%2F"+"&opts=16798&num=10&ts=1755573155663");
+                        document.getElementsByTagName("head")[0].appendChild(s);
+                    })();
+                    </script>
+                    <!-- end www.htmlcommentbox.com -->
+                </div>
+            </div>
+        <div class="footer-cell"> 
+            <!--Nav-Bar-->
+            <a href="" id="previous-href"><span class="nav-bar-prev">⟵ Previous</span></a>
+            <a href="" id="next-href"><span class="nav-bar-next">Next ⟶</span></a>
+        </div>
+    </div>
+    <script src="script-blog.js"></script> 
+</body>
+</html>
