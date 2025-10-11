@@ -215,10 +215,16 @@ table a:hover {
 .volume-container {
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: flex-start;
+  gap: 8px;
   font-size: 14px;
   color: #fff;
-  justify-content: space-between;
+}
+
+.volume-align {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 #volume {
@@ -230,6 +236,8 @@ table a:hover {
   border-radius: 5px;
   outline: none;
 }
+
+
 
 #volume::-webkit-slider-thumb { /* chrome */
   -webkit-appearance: none;
@@ -263,6 +271,10 @@ table a:hover {
   padding: 2px 20px;
   border: 2px solid var(--basic-light);
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  vertical-align: middle;
 }
 
 #loop:hover{
@@ -273,12 +285,94 @@ table a:hover {
   color: rgba(255, 143, 199, 0.76);
 }
 
+#shuffle {
+  background: var(--basic-dark);
+  color: var(--text);
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  padding: 2px 20px;
+  border: 2px solid var(--basic-light);
+  cursor: pointer;
+}
+
+#shuffle:hover {
+  background: var(--basic-bg);
+}
+
+#shuffle.active {
+  color: rgba(255, 143, 199, 0.76);
+}
+
+.time-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  margin-top: 5px;
+  color: #ddd;
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+}
+
+.volume-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #fff;
+  margin-top: 4px;
+}
+
+.volume-align {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+#volume {
+  width: 90px;
+}
+
+
+/* dude i couldnt remember how the fuck i did stuff so this is just overiding lololoolo */
+#shuffle, #loop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--basic-dark);
+  color: var(--text);
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  padding: 4px 16px;
+  border: 2px solid var(--basic-light);
+  cursor: pointer;
+  line-height: 1;
+  height: 32px;
+}
+
+#shuffle:hover, #loop:hover {
+  background: var(--basic-bg);
+}
+
+#shuffle.active, #loop.active {
+  color: rgba(255, 143, 199, 0.76);
+}
+
+
 .music-info span{
   text-align: center;
   font-family: "Comic Sans", monospace;
   color: var(--text);
   margin: 2px 0 10px 0;
   display: block;
+}
+
+.music-info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .music-player button {
@@ -1214,4 +1308,72 @@ a #hcb_settings {
   width: 100%;
   height: 100%;
   z-index: 9999;
+}
+
+.clickable-title,
+.clickable-artist {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text);
+  font-family: "Comic Sans", monospace;
+  display: block;
+  text-align: center;
+  margin: 2px 0;
+}
+
+.music-info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.song-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--basic-dark);
+  border: 3px double var(--basic-light);
+  border-radius: 0;
+  padding: 4px 0;
+  width: 90%;
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 10;
+  box-sizing: border-box;
+  font-family: "Comic Sans", monospace;
+  text-align: center;
+  
+}
+
+.song-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+}
+
+.song-menu li {
+  padding: 4px 6px;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+
+.song-menu li{
+  background: var(--basic-dark);
+  
+}
+
+.song-menu li:hover {
+  background: rgba(255, 143, 199, 0.2);
+  color: rgba(255, 143, 199, 0.76);
+}
+
+.music-info:hover #music-track,
+.music-info:hover #music-artist {
+  color: var(--basic-light);
 }

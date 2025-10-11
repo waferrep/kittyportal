@@ -52,6 +52,9 @@ const songs = [
   { name: "The Third Sanctuary", artist: "Toby Fox", url: "music/thirdsanctuary.mp3"},
   { name: "Menu/Options Screen", artist: "Richard Jacques", url: "music/sonic-r-options.mp3"},
   { name: "JACK DA FUNK", artist: "HIDEKI NAGANUMA", url: "music/jackdafunk.mp3"},
+  { name: "Light Velocity", artist: "Isamu Ohira", url: "music/light vel.mp3"},
+  { name: "Don't U Know (Original Mix)", artist: "xaev", url: "music/dontyouknow.mp3"},
+  { name: "Killshot", artist: "Magdalena Bay", url: "music/killshot.mp3"}
 ];
 
 let songIndex = 0;
@@ -126,18 +129,47 @@ volumeSlider.addEventListener("input", () => {
   audio.volume = volumeSlider.value;
 });
 
-const loopButton = document.getElementById("loop")
+const loopButton = document.getElementById("loop");
+const shuffleButton = document.getElementById("shuffle");
+
 let isLooping = false;
+let isShuffling = false;
 
 loopButton.addEventListener("click", () => {
   isLooping = !isLooping;
+  if (isLooping) {
+    isShuffling = false;
+    shuffleButton.classList.remove("active");
+  }
   audio.loop = isLooping;
   loopButton.classList.toggle("active", isLooping);
 });
 
+shuffleButton.addEventListener("click", () => {
+  isShuffling = !isShuffling;
+  if (isShuffling) {
+    isLooping = false;
+    loopButton.classList.remove("active");
+    audio.loop = false;
+  }
+  shuffleButton.classList.toggle("active", isShuffling);
+});
+
+function getRandomSongIndex() {
+  let newIndex;
+  do {
+    newIndex = Math.floor(Math.random() * songs.length);
+  } while (newIndex === songIndex && songs.length > 1);
+  return newIndex;
+}
+
 audio.addEventListener("ended", () => {
   if (!audio.loop) {
-    songIndex = (songIndex + 1) % songs.length; // loop back to start
+    if (isShuffling) {
+      songIndex = getRandomSongIndex();
+    } else {
+      songIndex = (songIndex + 1) % songs.length;
+    }
     loadSong(songIndex);
     playSong();
   }
@@ -163,6 +195,38 @@ audio.addEventListener("timeupdate", (e) => {
 volumeSlider.addEventListener("input", (e) => {
   audio.volume = e.target.value;
 });
+
+const songMenu = document.getElementById("song-menu");
+const songList = document.getElementById("song-list");
+const trackTitleSpan = document.getElementById("music-track");
+const artistSpan = document.getElementById("music-artist");
+
+songs.forEach((song, index) => {
+  const li = document.createElement("li");
+  li.textContent = `${song.name} — ${song.artist}`;
+  li.addEventListener("click", () => {
+    songIndex = index;
+    loadSong(songIndex);
+    playSong();
+    songMenu.style.display = "none";
+  });
+  songList.appendChild(li);
+});
+
+function toggleSongMenu() {
+  songMenu.style.display = songMenu.style.display === "block" ? "none" : "block";
+}
+
+trackTitleSpan.addEventListener("click", toggleSongMenu);
+artistSpan.addEventListener("click", toggleSongMenu);
+
+document.addEventListener("click", (e) => {
+  if (!songMenu.contains(e.target) && e.target !== trackTitleSpan && e.target !== artistSpan) {
+    songMenu.style.display = "none";
+  }
+});
+
+
 
 var motds = [
   "Some cats can meow 9,999,999,999 times a second (or more)",

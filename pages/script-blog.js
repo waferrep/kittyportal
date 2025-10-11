@@ -4,7 +4,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     //number of blogs
-    const numberOfBlogs = 5;
+    const numberOfBlogs = 6;
 
     //href get
     const prevHref = document.getElementById("previous-href");
