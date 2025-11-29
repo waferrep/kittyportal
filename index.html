@@ -9,8 +9,7 @@
     <title>kittyportal</title>
     
 </head>
-<body onload="displayMotd(); displaySpecies();" class="body"></body>
-<body>
+<body class="body"></body>
     <div class="banner-container">
         <div class="banner">
         <span id="banner-randomize"></span>
@@ -45,6 +44,7 @@
                     <img src="images/badges/tf2.gif" alt="tf2 badge"></img>
                     <img src="images/badges/funnypage.gif" alt="funny page badge"></img>
                     <img src="images/badges/crushit.gif" alt="crush capitalism badge"></img>
+                    <img src="images/badges/blinkie-yanny-laurel.gif" alt="yanny laurel badge"></img>
 
                     <img src="images/badges/8015_familyguy.png" alt="family guy badge"></img>
                     <img src="images/badges/Academy_catlover.gif" alt="cat lover badge"></img>
@@ -63,6 +63,7 @@
                     <img src="images/badges/tf2.gif" alt="tf2 badge"></img>
                     <img src="images/badges/funnypage.gif" alt="funny page badge"></img>
                     <img src="images/badges/crushit.gif" alt="crush capitalism badge"></img>
+                    <img src="images/badges/blinkie-yanny-laurel.gif" alt="yanny laurel badge"></img>
                     
                 </div>
             </div>
@@ -101,77 +102,12 @@
                             <th>Last Update</th>
                         </tr>
                     </thead>
-                    <tbody>
-
-                        <!---FORMULA FOR PAGES
-                        <tr>
-
-                            <td> 
-                                <a href=pages/aboutme.html target="blog-iframe">▹
-                                <span> Title </span></a>
-                            </td>
-                            <td>
-                                wafer
-                            </td>
-                            <td>
-                                8/15/2025 10:55 PM
-                            <td>
-                        </tr> --->
-                        
-                        <!-- Pinned! Always be at the top. -->
-                        <tr class="pinned-msg">
-                            <td><a href="pages/blog1.html" target="blog-iframe">📌 <span>about me :p</span></a></td>
-                            <td>wafer</td>
-                            <td class="post-date" data-utc="2025-08-16T02:55:00Z"></td>
-                        </tr>
-
-                        <tr>
-
-                            <td> 
-                                <a href=pages/blog7.html target="blog-iframe">▹
-                                <span>coming out</span></a>
-                            </td>
-                            <td>
-                                wafer
-                            </td>
-                            <td class="post-date" data-utc="2025-11-15T05:12:00Z"></td>
-                        </tr>
-
-                        <tr>
-                            <td><a href="pages/blog6.html" target="blog-iframe">▹ <span>the music update! + life</span></a></td>
-                            <td>wafer</td>
-                            <td class="post-date" data-utc="2025-10-10T01:29:00Z"></td>
-                        </tr>
-
-                        <tr>
-                            <td><a href="pages/blog5.html" target="blog-iframe">▹ <span>album release - september update</span></a></td>
-                            <td>wafer</td>
-                            <td class="post-date" data-utc="2025-09-13T23:16:00Z"></td>
-                        </tr>
-                        
-
-                        <tr>
-                            <td><a href="pages/blog4.html" target="blog-iframe">▹ <span>level 22</span></a></td>
-                            <td>wafer</td>
-                            <td class="post-date" data-utc="2025-08-22T04:00:00Z"></td>
-                        </tr>
-
-
-                        <tr>
-                            <td><a href="pages/blog3.html" target="blog-iframe">▹ <span>blog comments are here!</span></a></td>
-                            <td>wafer</td>
-                            <td class="post-date" data-utc="2025-08-19T05:36:00Z"></td>
-                        </tr>
-
-                        <tr>
-                            <td><a href="pages/blog2.html" target="blog-iframe">▹ <span>what has wafer been up to?</span></a></td>
-                            <td>wafer</td>
-                            <td class="post-date" data-utc="2025-08-18T06:09:00Z"></td>
-                        </tr>
-                        <!---FORMULA FOR PAGES--->
+                    <tbody id="posts-table-body">
 
                     </tbody>
                 </table>
+                <div id="pagination" class="pagination"></div>
+
                 <div id="blog-count" class="blog-count"></div>
             </div>
         </div>
@@ -262,15 +198,14 @@
     </div>
     </div>
 
-    <div id="modal-overlay">
-        <div class="modal-content">
-        <button id="modal-close">✖</button>
-        <iframe id="modal-iframe" src=""></iframe>
-        </div>
+<div id="modal-overlay">
+<div class="modal-content">
+    <button id="modal-close">✖</button>
+    <iframe id="modal-iframe" src="" frameborder="0" style="width: 100%; height: 90vh;"></iframe> 
     </div>
-<script src="script.js"></script> 
-<script type="module">
-</script>
+</div>
+<script type="module" src="script.js"></script>
+<script type="module" src="firebase.js"></script>
 
 </body>
 

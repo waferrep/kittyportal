@@ -532,11 +532,36 @@ table a:hover {
   background: var(--basic-light);
 }
 
-#modal-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
+#modal-title {
+  font-family: "Courier New", monospace;
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--text);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px dotted var(--basic-light);
 }
+
+#modal-author,
+#modal-date {
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  color: var(--basic-light);
+  margin: 2px 0 8px 0;
+}
+
+#modal-body {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--basic-dark);
+  border: 3px double var(--basic-light);
+  padding: 12px;
+  font-family: "Courier New", monospace;
+  color: var(--text);
+  line-height: 1.4;
+  white-space: normal;
+}
+
 
 .badges{
   margin-top: 20px;
@@ -744,13 +769,13 @@ table a:hover {
   text-align: center;
 }
 
-.username-header
-{
-  display: grid;
-  grid-template-areas: "a b c";
-  grid-template-columns: 1fr 1fr 1px;
+.username-header {
+  display: flex;
+  align-items: center;       /* <-- centers mood + name perfectly */
+  gap: 6px;                  /* spacing between name and icon */
   padding-top: 10px;
 }
+
 
 .mood-status{
   align-items: center;
@@ -768,13 +793,13 @@ table a:hover {
   padding: 2px;
 }
 
-.mood-picture-25px
+.mood-picture-24px
 {
-  grid-area: b;
-  display: block;
-  margin-top: 5px;
-  padding: 2px;
-  height: 25px;
+    max-height: 24px;   /* this controls final size */
+    height: auto;
+    width: auto;
+    object-fit: contain;
+    display: inline-block;
 }
 
 .mood-picture-25px-33wide
@@ -995,11 +1020,6 @@ a #hcb_settings {
   display: none;
 }
 
-
-#comments-list
-{
-  display: none !important;
-}
 
 #HCB_comment_box blockquote,
 #HCB_comment_box .hcb-comment-body,
@@ -1377,3 +1397,206 @@ a #hcb_settings {
 .music-info:hover #music-artist {
   color: var(--basic-light);
 }
+
+.form-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 15px;
+    background: var(--basic-bg);
+    border: 3px double var(--basic-light);
+    box-sizing: border-box;
+    font-family: "Courier New", monospace; 
+    color: var(--text);
+}
+
+.form-header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    color: var(--text);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px dotted var(--basic-light);
+}
+
+.form-group label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-container input[type="text"], 
+.form-container textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    background: var(--basic-dark); 
+    color: var(--text);
+    border: 1px solid var(--basic-light);
+    font-family: "Courier New", monospace;
+    resize: vertical;
+}
+
+.editor-toolbar {
+    display: flex;
+    gap: 5px;
+    padding: 5px 0;
+    margin-bottom: 5px;
+}
+.editor-toolbar button {
+    background: var(--basic-dark);
+    color: var(--text);
+    font-family: "Courier New", monospace;
+    font-size: 18px;
+    padding: 4px 12px;
+    border: 2px solid var(--basic-light);
+    cursor: pointer;
+    line-height: 1;
+}
+.editor-toolbar button:hover {
+    background: var(--basic-bg);
+}
+.editor-toolbar button:active {
+    border: 2px inset var(--basic-light); 
+}
+
+#content {
+    min-height: 300px;
+}
+
+#mood-tray {
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--basic-dark);
+    border: 3px double var(--basic-light);
+}
+#mood-tray h3 {
+    margin-top: 0;
+    font-size: 1em;
+    color: var(--text);
+}
+#mood-image-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 5px;
+}
+#mood-image-list img {
+    width: auto;
+    max-width: 40px;
+    height: auto;
+    max-height: 40px;
+    border: 1px solid var(--basic-light);
+    cursor: pointer; 
+}
+#mood-image-list img:hover {
+    border-color: var(--accent-pink);
+}
+
+.submit-button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background: var(--basic-dark);
+    color: var(--text);
+    border: 2px solid var(--basic-light);
+    cursor: pointer;
+    font-size: 1.1em;
+    font-family: "Courier New", monospace;
+}
+.submit-button:hover {
+    background: var(--basic-bg);
+}
+.horizontal-group select {
+    padding: 8px;
+    box-sizing: border-box;
+    background: var(--basic-dark); 
+    color: var(--text);
+    border: 1px solid var(--basic-light);
+    font-family: "Courier New", monospace;
+}
+
+#mood-icon:hover {
+  background: Var(--basic-bg);
+}
+
+
+#template-post-date {
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  color: var(--text);
+  font-style: italic
+}
+
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  background: #1a122a; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  font-family: "Courier New", monospace;
+}
+
+#loader-face {
+  font-size: 32px;
+  color: var(--text);
+  animation: spin-3 0.6s steps(4) infinite;
+  transform-origin: center center;
+  user-select: none;
+}
+
+@keyframes spin-3 {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(90deg); }
+  50%  { transform: rotate(180deg); }
+  75%  { transform: rotate(270deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.mood-tray-image {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;   
+    image-rendering: pixelated;
+    cursor: pointer;
+    margin: 4px;
+}
+
+.bold-title {
+  font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    gap: 6px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.pagination button {
+    background: var(--basic-dark);
+    color: var(--text);
+    border: 2px solid var(--basic-light);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: "Courier New", monospace;
+}
+
+.pagination button.active {
+    background: var(--basic-bg);
+    color: var(--basic-light);
+}
+
+.pagination button:hover {
+    background: var(--basic-bg);
+}
+
+.inline-mood-icon {
+    width: 24px;     
+    height: 24px;  
+    object-fit: contain;
+    vertical-align: middle; 
+}
+

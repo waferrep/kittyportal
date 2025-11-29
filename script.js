@@ -436,3 +436,135 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+
+document.addEventListener("DOMContentLoaded", () => {
+    displayMotd();
+    displaySpecies();
+});
+
+
+// Firestore
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+import { db } from "./firebase.js";
+
+const POSTS_PER_PAGE = 11;
+let currentPage = 1;
+
+let allPosts = [];
+
+async function fetchAllPosts() {
+    const postsDatabase = collection(db, "blogs");
+    const q = query(postsDatabase, orderBy("date", "desc"));
+
+    try {
+        const snapshot = await getDocs(q);
+
+        let posts = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        const pinned = posts.filter(p => p.pinned);
+        const unpinned = posts.filter(p => !p.pinned);
+
+        pinned.sort((a, b) => b.date.seconds - a.date.seconds);
+        unpinned.sort((a, b) => b.date.seconds - a.date.seconds);
+
+        allPosts = [...pinned, ...unpinned];
+        
+        displayPosts(currentPage);
+        renderPagination();
+
+    } catch (error) {
+        console.error("Error fetching posts: ", error);
+    }
+}
+
+function displayPosts(page) {
+    currentPage = page;
+    const tableBody = document.querySelector("#posts-table-body");
+    tableBody.innerHTML = ""; 
+
+    const startIndex = (page - 1) * POSTS_PER_PAGE;
+    const endIndex = startIndex + POSTS_PER_PAGE;
+    const postsToShow = allPosts.slice(startIndex, endIndex);
+
+    postsToShow.forEach(post => {
+        const tableRow = document.createElement("tr");
+
+        if (post.pinned) {
+            tableRow.classList.add("pinned-msg");
+        }
+
+        const tableTitle = document.createElement("td");
+        const link = document.createElement("a");
+
+        link.href = `pages/blog-template.html?id=${post.id}`;
+        link.target = "blog-iframe";
+        link.innerHTML = `▹ <span>${post.title}</span>`;
+
+        if (post.bold) {
+            link.classList.add("bold-title");
+        }
+
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            
+            const modal = document.getElementById("modal-overlay");
+            const modalIframe = document.getElementById("modal-iframe");
+            
+            modalIframe.src = link.href;
+            modal.style.display = "flex";
+        });
+
+        tableTitle.appendChild(link);
+        tableRow.appendChild(tableTitle);
+
+        const tableAuthor = document.createElement("td");
+        tableAuthor.textContent = post.author;
+        tableRow.appendChild(tableAuthor);
+
+        const tableDate = document.createElement("td");
+        tableDate.textContent = new Date(post.date.seconds * 1000).toLocaleString();
+        tableRow.appendChild(tableDate);
+
+        tableBody.appendChild(tableRow);
+    });
+}
+
+function renderPagination() {
+    const paginationContainer = document.getElementById("pagination");
+    paginationContainer.innerHTML = "";
+    
+    const pageCount = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+
+    for (let i = 1; i <= pageCount; i++) {
+        const button = document.createElement("button");
+        button.textContent = i;
+        button.classList.add("pagination-button");
+
+        if (i === currentPage) {
+            button.classList.add("active");
+        }
+
+        button.addEventListener("click", () => {
+            displayPosts(i);
+            renderPagination(); 
+        });
+
+        paginationContainer.appendChild(button);
+    }
+}
+
+
+window.addEventListener("DOMContentLoaded", fetchAllPosts);
+
+document.getElementById("modal-close").addEventListener("click", () => {
+    document.getElementById("modal-overlay").style.display = "none";
+});

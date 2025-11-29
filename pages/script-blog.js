@@ -1,53 +1,6 @@
 
 //javascript for page navigation and maybe maxwell funniness
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    //number of blogs
-    const numberOfBlogs = 7;
-
-    //href get
-    const prevHref = document.getElementById("previous-href");
-    const nextHref = document.getElementById("next-href");
-    const latestBlog = `blog${numberOfBlogs}.html`;
-    
-    //get path
-    const fullPath = window.location.pathname;
-    const currentPath = fullPath.split('/').pop();
-    
-    if (currentPath === 'undefined.html'){
-            nextHref.href = `blog1.html`;
-            prevHref.href = latestBlog;
-    }
-
-    else{
-
-        //parse number and turn real
-        const blogNumber = currentPath.match(/(\d+)/);
-        const blogParsed = parseInt(blogNumber[1], 10);
-
-        //get next and prev blog
-        const prevBlog = `blog${blogParsed - 1}.html`;
-        const nextBlog = `blog${blogParsed + 1}.html`;
-
-        //prev
-        if (blogParsed > 1) {
-            prevHref.href = prevBlog;
-        }
-        else {
-            prevHref.href = "undefined.html"
-        }
-
-        //next
-        if (blogParsed < numberOfBlogs) {
-            nextHref.href = nextBlog;
-        }
-        else{
-            nextHref.href = "undefined.html";
-        }
-
-    }
-});
 
 document.addEventListener("DOMContentLoaded", () => {
   const header = document.getElementById("commentHeader");
@@ -79,18 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 //audiplayer 2
-
-const audio = document.getElementById("snippet-audio");
-const playBtn = document.getElementById("snippet-play");
-const progress = document.getElementById("snippet-progress");
-const timeDisplay = document.getElementById("snippet-time");
-const volumeSlider = document.getElementById("snippet-volume");
-
-function formatTime(seconds) {
-  const minutes = Math.floor(seconds / 60) || 0;
-  const secs = Math.floor(seconds % 60) || 0;
-  return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
-}
 
 const snippetAudio = document.getElementById("snippet-audio");
 const snippetPlay = document.getElementById("snippet-play");
@@ -209,13 +150,13 @@ if (button) {
   const clownSound = document.getElementById("clown-sound");
 
   button.addEventListener("click", () => {
-    createConfetti(40); // burst confetti
+    createConfetti(40);
 
-    // Play clown noise
     if (clownSound) {
-      clownSound.currentTime = 0; // rewind if spamming
+      clownSound.currentTime = 0; 
       clownSound.play();
     }
   });
 }
 });
+

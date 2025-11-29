@@ -3,48 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles.css">
-    <title>kittyplace - wafer activities</title>
+    <link rel="stylesheet" href="../styles.css"> 
+    <title id="blog-title">kittyplace - Loading...</title>
 </head>
 <body>
     <div class="blog-container">
+
+        <div id="loading-screen">
+        <div id="loader-face">:3</div>
+        </div>
+
+
         <table class="blog-top-bar">
             <thead> 
-                <tr> <!--Author & Topic-->
-                    <th>author</th>
-                    <th>topic: blog comments are here!</th>
+                <tr> <th>author</th>
+                    <th id="template-topic">topic</th>
                 </tr>
             </thead>
         <tbody>
-            <tr> <!--Username, PFP, Mood-->
-                <td rowspan="2" class="username">
+            <tr> <td rowspan="2" class="username">
                     <div class="username-inner">
-                    <img src="blog\logo.png" alt="pfp" height=100 width=100 class="profile-picture"></img>
+                    <img src="blog/logo.png" alt="pfp" height="100" width="100" class="profile-picture"></img>
                     <div class="username-header">
-                        <p class="mood-status">
-                            wafer
-                        </p>
-                        <img src="blog\moods\angel1.gif" alt="angel gif" height=15 width=25 class="mood-picture-25px-33wide">
+                        <p class="mood-status" id="template-author">
+                        wafer</p>
+                        <img src="blog/moods/wacko.gif" alt="mood icon" height="15" width="25" class="mood-picture-24px" id="template-mood-icon">
                     </div>
                 </td>
             </tr>
             <tr>
-                <!--Blog Content-->
                 <td class="blog-cell">
-                <p>
-                    very quick post! just wanted to say blog comments are here ... and that u can comment on my blogs! :D </p>
-                <p> i'd prefer to keep spam to a minimum... so no "first" or whatever elses u wanna do... plz :></p>
-                <p> 
-                    for anyone reading.. thank u for using my site. its awesome having people read... and the amount of online users is always kinda high o_O </p>
-                <p class="signature">
-                    ~ all kitties go to heaven ~
-                </p>
+                    <h2 id="template-post-title" style="margin-top: 0;"></h2>
+                    
+                    <div id="template-post-content">
+                    </div>
+                    <p id="template-post-date"></p>
                 </td>
             </tr>
-        </tbody>
         
+        </tbody>
         </table>
-
+        
             <div class="comment-section" id="commentToggle">
                 <h3 id="commentHeader"> 
                     <span class="comment-text">Comments ▹</span>
@@ -69,12 +68,14 @@
                     <!-- end www.htmlcommentbox.com -->
                 </div>
             </div>
-        <div class="footer-cell"> 
-            <!--Nav-Bar-->
-            <a href="" id="previous-href"><span class="nav-bar-prev">⟵ Previous</span></a>
-            <a href="" id="next-href"><span class="nav-bar-next">Next ⟶</span></a>
-        </div>
-    </div>
-    <script src="script-blog.js"></script> 
+        
+            <div class="footer-cell"> 
+                <!--Nav-Bar-->
+                <a href="" id="previous-href"><span class="nav-bar-prev">⟵ Previous</span></a>
+                <a href="" id="next-href"><span class="nav-bar-next">Next ⟶</span></a>
+            </div>
+
+    <script type="module" src="submission-blog.js"></script> 
+    <script type="module" src="script-blog.js"></script>
 </body>
 </html>
