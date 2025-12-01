@@ -1,0 +1,37 @@
+name: Generate RSS Feed
+
+on:
+  schedule:
+    - cron: "0 * * * *" 
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-rss:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install Firebase Admin
+        run: npm install firebase-admin
+
+      - name: Generate RSS file
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node scripts/generate-rss.js
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add rss.xml
+          git commit -m "Update RSS feed" || echo "No changes to commit"
+          git push
