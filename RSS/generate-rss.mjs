@@ -24,7 +24,7 @@ async function generateRSS() {
             <item>
                 <title><![CDATA[${post.title}]]></title>
                 <link>https://kittyportal.zone/pages/blog-template.html?id=${doc.id}</link>
-                <description><![CDATA[${post.content?.slice(0, 200) || ""}...]]></description>
+                <description><![CDATA[${post.content?.slice(0, 100) || ""}...]]></description>
                 <pubDate>${date.toUTCString()}</pubDate>
                 <guid>${doc.id}</guid>
             </item>
