@@ -470,6 +470,12 @@ async function fetchAllPosts() {
             ...doc.data()
         }));
 
+        const newestPost = posts.reduce((latest, current) => {
+            return (!latest || current.date.seconds > latest.date.seconds) ? current : latest;
+        }, null);
+
+        window.newestPostId = newestPost?.id;
+
         const pinned = posts.filter(p => p.pinned);
         const unpinned = posts.filter(p => !p.pinned);
 
@@ -477,6 +483,7 @@ async function fetchAllPosts() {
         unpinned.sort((a, b) => b.date.seconds - a.date.seconds);
 
         allPosts = [...pinned, ...unpinned];
+        
         
         displayPosts(currentPage);
         renderPagination();
@@ -507,7 +514,11 @@ function displayPosts(page) {
 
         link.href = `pages/blog-template.html?id=${post.id}`;
         link.target = "blog-iframe";
-        link.innerHTML = `▹ <span>${post.title}</span>`;
+        const isNewest = window.newestPostId === post.id;
+
+        link.innerHTML = `▹ <span>${post.title}</span> ${
+            isNewest ? '<span class="new-badge">(NEW)</span>' : ''
+        }`;
 
         if (post.bold) {
             link.classList.add("bold-title");

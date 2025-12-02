@@ -1765,5 +1765,17 @@ a #hcb_settings {
     margin: 0px 0 !important; 
 }
 
+.new-badge {
+    color: #ff4d4d;
+    font-weight: bold;
+    margin-left: 6px;
+    font-size: 0.8em;
+    animation: blink 0.9s step-end infinite;
+    vertical-align: middle; 
+    text-decoration: none !important;
+}
 
-// test
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
