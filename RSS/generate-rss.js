@@ -43,7 +43,7 @@ async function generateRSS() {
         </rss>
     `;
 
-    fs.writeFileSync("../rss.xml", rss.trim());
+    fs.writeFileSync("rss.xml", rss.trim());
     console.log("RSS feed generated.");
 }
 
