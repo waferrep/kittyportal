@@ -568,3 +568,42 @@ window.addEventListener("DOMContentLoaded", fetchAllPosts);
 document.getElementById("modal-close").addEventListener("click", () => {
     document.getElementById("modal-overlay").style.display = "none";
 });
+
+
+//badge
+
+document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("kittybadge-container");
+    const popup = document.getElementById("badge-popup");
+    const copyBtn = document.getElementById("copy-badge-btn");
+    const textarea = popup.querySelector("textarea");
+
+    container.addEventListener("click", (e) => {
+        e.preventDefault();
+        popup.style.display = popup.style.display === "block" ? "none" : "block";
+        e.stopPropagation(); 
+    });
+
+    copyBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); 
+        const text = textarea.value;
+        navigator.clipboard.writeText(text);
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => copyBtn.textContent = "Copy Code", 900);
+    });
+
+    popup.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
+
+    textarea.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
+    
+    document.addEventListener("click", (e) => {
+        if (!container.contains(e.target)) {
+            popup.style.display = "none";
+        }
+    });
+});
+
