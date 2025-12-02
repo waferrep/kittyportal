@@ -35,9 +35,9 @@ async function generateRSS() {
         <?xml version="1.0" encoding="UTF-8"?>
         <rss version="2.0">
             <channel>
-                <title>KittyPortal Blog</title>
+                <title>kittyportal</title>
                 <link>https://kittyportal.zone/</link>
-                <description>Latest posts from Wafer’s blog</description>
+                <description>latest posts from kittyportal :3</description>
                 ${items}
             </channel>
         </rss>
