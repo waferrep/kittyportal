@@ -26,7 +26,7 @@ jobs:
       - name: Generate RSS file
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-        run: node RSS/generate-rss.js
+        run: node RSS/generate-rss.mjs
 
       - name: Commit changes
         run: |
