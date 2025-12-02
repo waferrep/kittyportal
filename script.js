@@ -514,7 +514,7 @@ function displayPosts(page) {
 
         link.href = `pages/blog-template.html?id=${post.id}`;
         link.target = "blog-iframe";
-        const isNewest = window.newestPostId === post.id;
+        const isNewest = (currentPage === 1) && (window.newestPostId === post.id);
 
         link.innerHTML = `▹ <span>${post.title}</span> ${
             isNewest ? '<span class="new-badge">(NEW)</span>' : ''
