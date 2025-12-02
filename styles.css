@@ -1758,9 +1758,9 @@ a #hcb_settings {
 }
 
 .credits {
-    margin-bottom: 4px !important; /* same as social items */
+    margin-bottom: 4px !important; 
 }
 
 .rss-link {
-    margin: 0px 0 !important; /* same spacing as other links */
+    margin: 0px 0 !important; 
 }
