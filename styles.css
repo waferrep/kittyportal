@@ -1779,3 +1779,49 @@ a #hcb_settings {
 @keyframes blink {
     50% { opacity: 0; }
 }
+
+.wafer {
+  display: flex;
+  gap: 20px;
+  height: 500px;
+  image-rendering: pixelated;
+
+  display: block;
+  transition:
+      transform 0.3s cubic-bezier(.4, 0, .2, 1),
+      filter 0.3s cubic-bezier(.4, 0, .2, 1);
+
+  filter: drop-shadow(0 0 0 var(--basic-dark));
+}
+
+.wafer:hover {
+  transform: translateY(-8px);
+  image-rendering: pixelated;
+}
+
+.wafer.hsl:hover {
+  filter: drop-shadow(0px 16px 0px var(--basic-dark));
+  image-rendering: pixelated;
+}
+
+.wafer-row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; 
+}
+
+.wafer-block{
+  margin-top: -20px;
+}
+.wafer-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.wafer-credit {
+    margin-top: 8px;
+    font-size: 10px;
+    opacity: 0.7;
+    color: var(--text);
+}
