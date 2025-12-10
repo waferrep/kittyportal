@@ -6,6 +6,14 @@
                 <description>latest posts from kittyportal :3</description>
                 
             <item>
+                <title><![CDATA[📌about me]]></title>
+                <link>https://kittyportal.zone/pages/blog-template.html?id=RGedK2PuKyW85TqlQZCH</link>
+                <description><![CDATA[[b][i]meow[/i][/b]! i'm wafer ([i]moniker: wafur, pronouns: any/all[/i]). you may know me already if you're visiting this site. or maybe not, in which case, i'm pleased to make your acquaintance :3c! ...]]></description>
+                <pubDate>Wed, 10 Dec 2025 04:22:20 GMT</pubDate>
+                <guid>RGedK2PuKyW85TqlQZCH</guid>
+            </item>
+        
+            <item>
                 <title><![CDATA[blog reformatting (rip comments)]]></title>
                 <link>https://kittyportal.zone/pages/blog-template.html?id=5b7Icay1nNxcLb6h9Vyo</link>
                 <description><![CDATA[hallo! it's been a while again. not a particularly exciting update, but i've been busy slaving away at re-writing how my blogs are formatted, displayed, etc., and they now finally live in a database!
@@ -60,14 +68,6 @@
                 <description><![CDATA[<p> im actually writing this right after writing the about me but.. no one has to know <img src="blog/moods/smash.gif" alt="smashing hammer gif"></p><p> i'm very fortunate(?) to have been laid off las...]]></description>
                 <pubDate>Mon, 18 Aug 2025 06:09:00 GMT</pubDate>
                 <guid>CrJYAFGRJTYJM3TDcqDX</guid>
-            </item>
-        
-            <item>
-                <title><![CDATA[📌about me :p]]></title>
-                <link>https://kittyportal.zone/pages/blog-template.html?id=EBzNOBN7ieENukcN7rwz</link>
-                <description><![CDATA[<p> Soooooooooooo.... hiiiiiiiii everynyan who reads this.. <img src="blog/moods/kitty2.gif" alt="kitty gif"></p><p> this feels very vulnerable and embarassing so apologies if my writing sux at all mo...]]></description>
-                <pubDate>Sat, 16 Aug 2025 02:55:00 GMT</pubDate>
-                <guid>EBzNOBN7ieENukcN7rwz</guid>
             </item>
         
             </channel>
