@@ -187,39 +187,83 @@
             <ul id="online-users" style="display: none;"></ul>
 
             <ul id="online-users" style="display: none;"></ul>
-            <iframe src='https://iframe.chat/embed?chat=31318985' id='chattable' frameborder='none'></iframe>
-                <script>
-                    chattable.initialize({
-                        stylesheet : "chattable.css"
-                        
-                    });
+                <div id="chatbox">
+                <button id="chat-settings" title="settings" aria-label="settings">⚙</button>
 
-                    const onlineUsersElement = document.getElementById("online-users");
-                    const onlineCount = document.getElementById("online-count");
+                <div id="messages"></div>
 
-                    let isExpanded = false;
+                <div id="replyBar" class="replyBar" hidden>
+                    <span class="replyLabel">Replying to</span>
+                    <span id="replyToName" class="replyToName"></span>
+                    <span id="replyToSnippet" class="replyToSnippet"></span>
+                    <button id="replyCancel" class="replyCancel" type="button">x</button>
+                    </div>
 
-                    onlineCount.addEventListener("click", () => {
-                    isExpanded = !isExpanded;
-                    onlineUsersElement.style.display = isExpanded ? "block" : "none";
-                    });
 
-                    chattable.on("connection", function (list) {
-                    onlineUsersElement.innerHTML = "";
+                <form id="chat-form">
+                <div id="chat-input-row">
+                    <input id="chat-input" placeholder="Type your message here" maxlength="500" autocomplete="off" />
+                    <button id="chat-emoji" type="button" title="emojis" aria-label="emojis">☺</button>
+                </div>
+                </form>
 
-                    let userList = Object.values(list);
 
-                    userList.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-                    onlineCount.textContent = `(${userList.length})`;
+                <div id="emoji-tray" hidden></div>
 
-                    userList.forEach((name) => {
-                        const item = document.createElement("li");
-                        item.textContent = name;
-                        item.classList.add("list-item");
-                        onlineUsersElement.appendChild(item);
-                        });
-                    });
-                </script>    
+                <div id="settings-modal" class="kp-modal" hidden>
+                    <div class="kp-modal-inner">
+                        <div class="kp-modal-top">
+                            <span></span>
+                            <button id="settings-close" title="close" type="button">✖</button>
+                        </div>
+
+                        <label class="kp-label">
+                            username
+                            <input id="username-input" maxlength="24" autocomplete="off" />
+                        </label>
+
+                        <label class="kp-label" style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
+                            <input type="checkbox" id="mute-toggle" />
+                            mute incoming messages
+                        </label>
+
+                        <label class="kp-label" style="margin-top: 10px; display: block;">
+                            notification volume
+                            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" class="kp-range" style="width: 100%; margin-top: 5px;" />
+                        </label>
+
+                        <div class="kp-modal-actions" style="margin-top: 15px;">
+                            <button id="username-save" type="button">save</button>
+                        </div>
+
+                        <hr style="border: 0; border-top: 1px dotted var(--basic-light); margin: 15px 0;">
+
+                        <div id="owner-login-section">
+                            <p style="font-size: 12px; margin-bottom: 5px;">owner login</p>
+                            <input type="email" id="owner-email" placeholder="email" class="kp-input" style="width: 100%; margin-bottom: 5px; background: var(--basic-dark); color: var(--text); border: 1px solid var(--basic-light);" />
+                            <input type="password" id="owner-password" placeholder="password" class="kp-input" style="width: 100%; margin-bottom: 10px; background: var(--basic-dark); color: var(--text); border: 1px solid var(--basic-light);" />
+                            <button id="owner-login-btn" type="button">login</button>
+                        </div>
+
+                        <div id="owner-status-section" hidden>
+                            <p>logged in as owner</p>
+                            <button id="owner-logout-btn" type="button">logout</button>
+                        </div>
+                    </div>
+                </div>
+
+                    <label class="kp-label" hidden>
+                        username
+                        <input id="username-input" maxlength="24" autocomplete="off" />
+                    </label>
+
+                    <div class="kp-modal-actions" hidden>
+                        <button id="username-save" type="button">save</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -233,6 +277,7 @@
 </div>
 <script type="module" src="script.js"></script>
 <script type="module" src="firebase.js"></script>
+<script type="module" src="chat.js"></script>
 
 </body>
 
