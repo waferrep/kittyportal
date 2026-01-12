@@ -6,13 +6,15 @@
                 <description>latest posts from kittyportal :3</description>
                 
             <item>
-                <title><![CDATA[chatbox rewrite]]></title>
-                <link>https://kittyportal.zone/pages/blog-template.html?id=kK5kvvUl181A2Tt90DY3</link>
-                <description><![CDATA[hi folks
+                <title><![CDATA[chatbox update and rewrite]]></title>
+                <link>https://kittyportal.zone/pages/blog-template.html?id=9ohSWszFElgZJkGnpGZQ</link>
+                <description><![CDATA[hi folks! 
 
-the chatbox service i've been using is pretty much officially dead due to attacks against it, https://www.reddit.com/r/ChattableDevs/comments/1q7dj3r/an_important_announcement_to_all_chattab...]]></description>
-                <pubDate>Sun, 11 Jan 2026 17:24:01 GMT</pubDate>
-                <guid>kK5kvvUl181A2Tt90DY3</guid>
+recently the chatbox service i use went under attack and is, essentially, indefinitely unsupported. this means i am forced to use another chatbox service, or, make my own. 
+
+given the crea...]]></description>
+                <pubDate>Mon, 12 Jan 2026 02:10:36 GMT</pubDate>
+                <guid>9ohSWszFElgZJkGnpGZQ</guid>
             </item>
         
             <item>
