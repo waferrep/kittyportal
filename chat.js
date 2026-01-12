@@ -29,7 +29,8 @@ import {
   set,
   remove,
   onDisconnect,
-  serverTimestamp as rtdbTimestamp
+  serverTimestamp as rtdbTimestamp,
+  push
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
 
 const OWNER_UID = "5tRQ4TtTNPMV1rF4ZjeDUJGmMXJ2";
@@ -57,19 +58,28 @@ if (!localStorage.getItem("kp_username")) {
 
 // -------------------- Presence (RTDB) --------------------
 function setupPresence(user) {
-  const userStatusRef = ref(rtdb, "/status/" + user.uid);
   const connectedRef = ref(rtdb, ".info/connected");
 
-  onValue(connectedRef, (snapshot) => {
-    if (snapshot.val() === false) return;
+  const userRootRef = ref(rtdb, "/status/" + user.uid);
+  const connectionsRef = ref(rtdb, "/status/" + user.uid + "/connections");
+  const profileRef = ref(rtdb, "/status/" + user.uid + "/profile");
 
-    onDisconnect(userStatusRef).remove();
-    set(userStatusRef, {
+  onValue(connectedRef, (snap) => {
+    if (snap.val() !== true) return;
+
+    const thisConnRef = push(connectionsRef);
+
+    onDisconnect(thisConnRef).remove();
+
+    set(thisConnRef, true);
+
+    set(profileRef, {
       username: currentUsername,
       last_changed: rtdbTimestamp()
     });
   });
 }
+
 
 const onlineCountEl = document.getElementById("online-count");
 const onlineUsersList = document.getElementById("online-users");
@@ -77,8 +87,19 @@ const statusRef = ref(rtdb, "/status");
 
 onValue(statusRef, (snapshot) => {
   const users = snapshot.val() || {};
-  const userEntries = Object.values(users);
-  const uniqueNames = [...new Set(userEntries.map((u) => u.username))];
+
+  const onlineNames = [];
+
+  for (const uid of Object.keys(users)) {
+    const u = users[uid];
+    const hasConnections = u?.connections && Object.keys(u.connections).length > 0;
+    if (!hasConnections) continue;
+
+    const name = u?.profile?.username;
+    if (name) onlineNames.push(name);
+  }
+
+  const uniqueNames = [...new Set(onlineNames)];
 
   if (onlineCountEl) onlineCountEl.textContent = `(${uniqueNames.length})`;
 
@@ -91,6 +112,7 @@ onValue(statusRef, (snapshot) => {
     });
   }
 });
+
 
 // -------------------- Chat DOM --------------------
 const messagesEl = document.getElementById("messages");
