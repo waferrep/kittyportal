@@ -119,7 +119,6 @@ const messagesEl = document.getElementById("messages");
 const form = document.getElementById("chat-form");
 const input = document.getElementById("chat-input");
 
-// Reply composer bar (must exist in HTML if you want the UI)
 const replyBar = document.getElementById("replyBar");
 const replyToNameEl = document.getElementById("replyToName");
 const replyToSnippetEl = document.getElementById("replyToSnippet");
@@ -589,11 +588,12 @@ window.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("kp_username", currentUsername);
 
     if (auth.currentUser) {
-      set(ref(rtdb, "/status/" + auth.currentUser.uid), {
+      set(ref(rtdb, "/status/" + auth.currentUser.uid + "/profile"), {
         username: currentUsername,
         last_changed: rtdbTimestamp()
       });
     }
+
 
     if (settingsModal) settingsModal.hidden = true;
   });
