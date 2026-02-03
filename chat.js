@@ -1,3 +1,5 @@
+const ENV = "prod"; // "prod" or "test"
+
 import { db, auth, rtdb } from "./firebase.js";
 
 import {
@@ -127,7 +129,10 @@ const replyCancelBtn = document.getElementById("replyCancel");
 let replyTo = null; // { id, uid, username, textSnippet }
 
 // -------------------- Firestore Queries --------------------
-const messagesRef = collection(db, "messages");
+const MESSAGES_COLLECTION =
+  ENV === "test" ? "staging" : "messages";
+
+const messagesRef = collection(db, MESSAGES_COLLECTION);
 
 const recentQ = query(
   messagesRef,
@@ -308,7 +313,7 @@ replyCancelBtn?.addEventListener("click", () => {
 async function banUserByUid(targetUid, reason = "") {
   if (!targetUid) return;
 
-  // doc id = uid makes checks in security rules easy
+  // doc id = uid
   await setDoc(doc(db, "bans", targetUid), {
     reason: reason || "banned",
     createdAt: firestoreTimestamp(),
@@ -443,7 +448,6 @@ function buildMessageEl(docSnap) {
   wrap.appendChild(text);
   wrap.appendChild(fullDate);
 
-  // Toggle full timestamp on click (and close others)
   wrap.addEventListener("click", () => {
     fullDate.hidden = !fullDate.hidden;
     document.querySelectorAll(".msgFullDate").forEach((el) => {
@@ -451,7 +455,6 @@ function buildMessageEl(docSnap) {
     });
   });
 
-  // Right click menu
   wrap.addEventListener("contextmenu", (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -463,11 +466,8 @@ function buildMessageEl(docSnap) {
 
 function mergeDocs(pinned, recent) {
   const map = new Map();
-
-  // pinned stays at the top (pinnedAt desc)
   pinned.forEach((d) => map.set(d.id, d));
 
-  // recent query is createdAt desc; reverse so it renders oldest -> newest
   const recentAsc = [...recent].reverse();
   recentAsc.forEach((d) => {
     if (!map.has(d.id)) map.set(d.id, d);
@@ -509,6 +509,139 @@ onSnapshot(recentQ, (snapshot) => {
   renderMessages();
 });
 
+// -------------------- Moderation --------------------
+const BLOCKED_TERMS = [
+  "rape",
+  "nigger",
+  "kike",
+  "tranny",
+  "faggot",
+  "retard",
+  "coon",
+  "dyke"
+];
+
+const BLOCK_MATCH_WHOLE_WORDS = true;
+
+// 2) Spam rules
+const SPAM_WINDOW_MS = 30_000;          // 30 seconds
+const SPAM_MAX_MSGS_IN_WINDOW = 5;      // more than 5 => cooldown
+const STRIKE_RESET_MS = 60 * 60 * 1000; // 1 hour
+
+const COOLDOWN_LADDER_SECONDS = [60, 600, 1800, 3600, 7200, 14400];
+
+function escapeRegex(s) {
+  return String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function normalizeForModeration(s) {
+  return String(s ?? "")
+    .toLowerCase()
+    .normalize("NFKC")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function buildBlockedRegexList(terms) {
+  return (terms || [])
+    .map((t) => normalizeForModeration(t))
+    .filter(Boolean)
+    .map((t) => {
+      const escaped = escapeRegex(t);
+      if (BLOCK_MATCH_WHOLE_WORDS) {
+        return new RegExp(`\\b${escaped}\\b`, "i");
+      }
+      return new RegExp(escaped, "i");
+    });
+}
+
+const BLOCKED_REGEXES = buildBlockedRegexList(BLOCKED_TERMS);
+
+function containsBlockedTerm(text) {
+  const norm = normalizeForModeration(text);
+  return BLOCKED_REGEXES.some((re) => re.test(norm));
+}
+
+function rlKey(uid) {
+  return `kp_rl_${uid || "anon"}`;
+}
+
+function loadRlState(uid) {
+  try {
+    const raw = localStorage.getItem(rlKey(uid));
+    const parsed = raw ? JSON.parse(raw) : null;
+    return parsed && typeof parsed === "object"
+      ? parsed
+      : { sent: [], strikes: 0, strikeStart: 0, cooldownUntil: 0 };
+  } catch {
+    return { sent: [], strikes: 0, strikeStart: 0, cooldownUntil: 0 };
+  }
+}
+
+function saveRlState(uid, state) {
+  try {
+    localStorage.setItem(rlKey(uid), JSON.stringify(state));
+  } catch {}
+}
+
+// Returns { ok: boolean, reason?: string, cooldownUntil?: number }
+function checkAndUpdateRateLimit(uid) {
+  const now = Date.now();
+  const st = loadRlState(uid);
+
+  if (!st.strikeStart || now - st.strikeStart >= STRIKE_RESET_MS) {
+    st.strikes = 0;
+    st.strikeStart = now;
+  }
+
+  if (st.cooldownUntil && now < st.cooldownUntil) {
+    saveRlState(uid, st);
+    return {
+      ok: false,
+      reason: "cooldown",
+      cooldownUntil: st.cooldownUntil
+    };
+  }
+
+  const sent = Array.isArray(st.sent) ? st.sent : [];
+  const pruned = sent.filter((t) => typeof t === "number" && now - t < SPAM_WINDOW_MS);
+
+  pruned.push(now);
+
+  if (pruned.length > SPAM_MAX_MSGS_IN_WINDOW) {
+    st.strikes += 1;
+
+    const idx = Math.min(st.strikes - 1, COOLDOWN_LADDER_SECONDS.length - 1);
+    const cooldownSeconds =
+      idx >= 0 ? COOLDOWN_LADDER_SECONDS[idx] : COOLDOWN_LADDER_SECONDS[0];
+
+    st.cooldownUntil = now + cooldownSeconds * 1000;
+
+    st.sent = [];
+    saveRlState(uid, st);
+
+    return {
+      ok: false,
+      reason: "rate_limited",
+      cooldownUntil: st.cooldownUntil
+    };
+  }
+
+  st.sent = pruned;
+  st.cooldownUntil = 0;
+  saveRlState(uid, st);
+
+  return { ok: true };
+}
+
+function formatRemaining(ms) {
+  const s = Math.max(0, Math.ceil(ms / 1000));
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return m > 0 ? `${m}m ${String(r).padStart(2, "0")}s` : `${r}s`;
+}
+
+
 // -------------------- Send message (form submit) --------------------
 form?.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -520,6 +653,23 @@ form?.addEventListener("submit", async (e) => {
   const u = auth.currentUser;
   if (!u) {
     alert("Not signed in yet — try again in a second.");
+    return;
+  }
+
+  if (containsBlockedTerm(textVal)) {
+    alert("That message contains a blocked word/phrase. Please edit it. This has been logged to the website owner.");
+    return;
+  }
+
+  const rl = checkAndUpdateRateLimit(u.uid);
+  if (!rl.ok) {
+    const until = rl.cooldownUntil ?? 0;
+    const remaining = formatRemaining(until - Date.now());
+    alert(
+      rl.reason === "cooldown"
+        ? `You're on cooldown. Try again in ${remaining}.`
+        : `You're sending messages too fast. Cooldown: ${remaining}.`
+    );
     return;
   }
 
@@ -549,6 +699,7 @@ form?.addEventListener("submit", async (e) => {
     alert(err?.message ?? String(err));
   }
 });
+
 
 // -------------------- Settings modal + owner login --------------------
 window.addEventListener("DOMContentLoaded", () => {
