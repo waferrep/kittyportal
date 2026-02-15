@@ -38,23 +38,6 @@ import {
 const OWNER_UID = "5tRQ4TtTNPMV1rF4ZjeDUJGmMXJ2";
 const OWNER_NAME = "wafer";
 
-// -------------------- Human gate --------------------
-let isHuman = false;
-let presenceStarted = false;
-
-function markHuman(user) {
-  if (!user || isHuman) return;
-  isHuman = true;
-
-  setTimeout(() => {
-    if (!presenceStarted) {
-      presenceStarted = true;
-      setupPresence(user);
-    }
-  }, 4000); // delay
-}
-
-
 // -------------------- Preferences --------------------
 let isMuted = localStorage.getItem("kp_muted") === "true";
 let notificationVolume = parseFloat(localStorage.getItem("kp_volume"));
@@ -803,25 +786,25 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-onAuthStateChanged(auth, (user) => {
-  if (!user) return;
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      signInAnonymously(auth);
+      return;
+    }
 
-  // Only trigger presence when user interacts with chat input
-  if (input) {
-    input.addEventListener("focus", () => markHuman(user), { once: true });
-    input.addEventListener("keydown", () => markHuman(user), { once: true });
-  }
+    // presence
+    setTimeout(() => setupPresence(user), 500);
 
-  const isOwner = user.uid === OWNER_UID;
-  const loginSection = document.getElementById("owner-login-section");
-  const statusSection = document.getElementById("owner-status-section");
-  if (loginSection) loginSection.hidden = isOwner;
-  if (statusSection) statusSection.hidden = !isOwner;
+    // owner login UI toggle
+    const isOwner = user.uid === OWNER_UID;
+    const loginSection = document.getElementById("owner-login-section");
+    const statusSection = document.getElementById("owner-status-section");
+    if (loginSection) loginSection.hidden = isOwner;
+    if (statusSection) statusSection.hidden = !isOwner;
 
-  renderReplyComposerUI();
-  renderMessages();
-});
-
-
+    // render reply bar state + rerender (owner controls)
+    renderReplyComposerUI();
+    renderMessages();
+  });
 
 });
