@@ -58,29 +58,51 @@ if (!localStorage.getItem("kp_username")) {
   localStorage.setItem("kp_username", currentUsername);
 }
 
-// -------------------- Presence (RTDB) --------------------
 function setupPresence(user) {
   const connectedRef = ref(rtdb, ".info/connected");
 
-  const userRootRef = ref(rtdb, "/status/" + user.uid);
+  const userRef = ref(rtdb, "/status/" + user.uid);
   const connectionsRef = ref(rtdb, "/status/" + user.uid + "/connections");
   const profileRef = ref(rtdb, "/status/" + user.uid + "/profile");
+
+  let thisConnRef = null;
+  let heartbeatTimer = null;
 
   onValue(connectedRef, (snap) => {
     if (snap.val() !== true) return;
 
-    const thisConnRef = push(connectionsRef);
+    thisConnRef = push(connectionsRef);
 
     onDisconnect(thisConnRef).remove();
+    set(thisConnRef, {
+      lastSeen: rtdbTimestamp()
+    });
 
-    set(thisConnRef, true);
+    // heartbeat every 20s
+    heartbeatTimer = setInterval(() => {
+      set(thisConnRef, {
+        lastSeen: rtdbTimestamp()
+      });
+    }, 20_000);
 
+    // user profile
     set(profileRef, {
       username: currentUsername,
       last_changed: rtdbTimestamp()
     });
+
+    // if this was the last connection, remove the user node
+    onDisconnect(userRef).update({
+      connections: null
+    });
+  });
+
+  window.addEventListener("beforeunload", () => {
+    if (heartbeatTimer) clearInterval(heartbeatTimer);
   });
 }
+
+
 
 
 const onlineCountEl = document.getElementById("online-count");
