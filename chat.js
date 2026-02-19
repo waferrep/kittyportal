@@ -109,34 +109,6 @@ const onlineCountEl = document.getElementById("online-count");
 const onlineUsersList = document.getElementById("online-users");
 const statusRef = ref(rtdb, "/status");
 
-onValue(statusRef, (snapshot) => {
-  const users = snapshot.val() || {};
-
-  const onlineNames = [];
-
-  for (const uid of Object.keys(users)) {
-    const u = users[uid];
-    const hasConnections = u?.connections && Object.keys(u.connections).length > 0;
-    if (!hasConnections) continue;
-
-    const name = u?.profile?.username;
-    if (name) onlineNames.push(name);
-  }
-
-  const uniqueNames = [...new Set(onlineNames)];
-
-  if (onlineCountEl) onlineCountEl.textContent = `(${uniqueNames.length})`;
-
-  if (onlineUsersList) {
-    onlineUsersList.innerHTML = "";
-    uniqueNames.forEach((name) => {
-      const li = document.createElement("li");
-      li.textContent = name;
-      onlineUsersList.appendChild(li);
-    });
-  }
-});
-
 
 // -------------------- Chat DOM --------------------
 const messagesEl = document.getElementById("messages");
@@ -808,42 +780,53 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  let statusUnsub = null;
+
   onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      signInAnonymously(auth);
-      return;
+    if (!user) return;
+
+    if (!statusUnsub) {
+      const statusRef = ref(rtdb, "/status");
+
+      statusUnsub = onValue(statusRef, (snapshot) => {
+        const users = snapshot.val() || {};
+        const now = Date.now();
+        const STALE_MS = 60_000;
+
+        const onlineNames = [];
+
+        for (const uid of Object.keys(users)) {
+          const u = users[uid];
+          const conns = u?.connections || {};
+
+          const active = Object.values(conns).some((c) => {
+            return c?.lastSeen && now - c.lastSeen < STALE_MS;
+          });
+
+          if (!active) continue;
+
+          const name = u?.profile?.username;
+          if (name) onlineNames.push(name);
+        }
+
+        const uniqueNames = [...new Set(onlineNames)];
+
+        if (onlineCountEl) {
+          onlineCountEl.textContent = `(${uniqueNames.length})`;
+        }
+
+        if (onlineUsersList) {
+          onlineUsersList.innerHTML = "";
+          uniqueNames.forEach((name) => {
+            const li = document.createElement("li");
+            li.textContent = name;
+            onlineUsersList.appendChild(li);
+          });
+        }
+      });
     }
+  });
 
-    // presence
-    let presenceStarted = false;
-    let authReadyUser = null;
-
-    function maybeStartPresence() {
-      if (presenceStarted) return;
-      if (!authReadyUser) return;
-      if (document.visibilityState !== "visible") return;
-
-      presenceStarted = true;
-      setupPresence(authReadyUser);
-    }
-
-    onAuthStateChanged(auth, (user) => {
-      if (!user) return;
-      authReadyUser = user;
-      maybeStartPresence();
-    });
-
-    ["keydown", "mousedown", "touchstart", "pointerdown"].forEach((evt) => {
-      window.addEventListener(evt, maybeStartPresence);
-    });
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible") {
-        maybeStartPresence();
-      }
-    });
-
-    window.addEventListener("focus", maybeStartPresence);
 
 
     // owner login UI toggle
@@ -857,5 +840,4 @@ window.addEventListener("DOMContentLoaded", () => {
     renderReplyComposerUI();
     renderMessages();
   });
-
-});
+  
