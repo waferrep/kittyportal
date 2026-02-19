@@ -815,36 +815,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     // presence
-    let presenceStarted = false;
-    let authReadyUser = null;
-
-    function maybeStartPresence() {
-      if (presenceStarted) return;
-      if (!authReadyUser) return;
-      if (document.visibilityState !== "visible") return;
-
-      presenceStarted = true;
-      setupPresence(authReadyUser);
-    }
-
-    onAuthStateChanged(auth, (user) => {
-      if (!user) return;
-      authReadyUser = user;
-      maybeStartPresence();
-    });
-
-    ["keydown", "mousedown", "touchstart", "pointerdown"].forEach((evt) => {
-      window.addEventListener(evt, maybeStartPresence);
-    });
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible") {
-        maybeStartPresence();
-      }
-    });
-
-    window.addEventListener("focus", maybeStartPresence);
-
+    setTimeout(() => setupPresence(user), 500);
 
     // owner login UI toggle
     const isOwner = user.uid === OWNER_UID;
@@ -853,7 +824,7 @@ window.addEventListener("DOMContentLoaded", () => {
     if (loginSection) loginSection.hidden = isOwner;
     if (statusSection) statusSection.hidden = !isOwner;
 
-    // render reply bar state + rerender 
+    // render reply bar state + rerender (owner controls)
     renderReplyComposerUI();
     renderMessages();
   });
