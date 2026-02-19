@@ -816,27 +816,35 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // presence
     let presenceStarted = false;
+    let authReadyUser = null;
 
-    function startPresenceOnce(user) {
-      if (presenceStarted || !user) return;
+    function maybeStartPresence() {
+      if (presenceStarted) return;
+      if (!authReadyUser) return;
+      if (document.visibilityState !== "visible") return;
+
       presenceStarted = true;
-      setupPresence(user);
+      setupPresence(authReadyUser);
     }
 
-    const PRESENCE_EVENTS = [
-      "keydown",
-      "mousedown",
-      "touchstart",
-      "pointerdown"
-    ];
-
-    PRESENCE_EVENTS.forEach((evt) => {
-      window.addEventListener(
-        evt,
-        () => startPresenceOnce(auth.currentUser),
-        { once: true }
-      );
+    onAuthStateChanged(auth, (user) => {
+      if (!user) return;
+      authReadyUser = user;
+      maybeStartPresence();
     });
+
+    ["keydown", "mousedown", "touchstart", "pointerdown"].forEach((evt) => {
+      window.addEventListener(evt, maybeStartPresence);
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") {
+        maybeStartPresence();
+      }
+    });
+
+    window.addEventListener("focus", maybeStartPresence);
+
 
     // owner login UI toggle
     const isOwner = user.uid === OWNER_UID;
