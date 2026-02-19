@@ -109,6 +109,34 @@ const onlineCountEl = document.getElementById("online-count");
 const onlineUsersList = document.getElementById("online-users");
 const statusRef = ref(rtdb, "/status");
 
+onValue(statusRef, (snapshot) => {
+  const users = snapshot.val() || {};
+
+  const onlineNames = [];
+
+  for (const uid of Object.keys(users)) {
+    const u = users[uid];
+    const hasConnections = u?.connections && Object.keys(u.connections).length > 0;
+    if (!hasConnections) continue;
+
+    const name = u?.profile?.username;
+    if (name) onlineNames.push(name);
+  }
+
+  const uniqueNames = [...new Set(onlineNames)];
+
+  if (onlineCountEl) onlineCountEl.textContent = `(${uniqueNames.length})`;
+
+  if (onlineUsersList) {
+    onlineUsersList.innerHTML = "";
+    uniqueNames.forEach((name) => {
+      const li = document.createElement("li");
+      li.textContent = name;
+      onlineUsersList.appendChild(li);
+    });
+  }
+});
+
 
 // -------------------- Chat DOM --------------------
 const messagesEl = document.getElementById("messages");
@@ -780,65 +808,54 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-let statusUnsub = null;
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      signInAnonymously(auth);
+      return;
+    }
 
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    signInAnonymously(auth);
-    return;
-  }
+    // presence
+    let presenceStarted = false;
+    let authReadyUser = null;
 
-  // ---------------- Presence ----------------
-  setupPresence(user);
+    function maybeStartPresence() {
+      if (presenceStarted) return;
+      if (!authReadyUser) return;
+      if (document.visibilityState !== "visible") return;
 
-  if (!statusUnsub) {
-    const statusRef = ref(rtdb, "/status");
+      presenceStarted = true;
+      setupPresence(authReadyUser);
+    }
 
-    statusUnsub = onValue(statusRef, (snapshot) => {
-      const users = snapshot.val() || {};
-      const now = Date.now();
-      const STALE_MS = 60_000;
+    onAuthStateChanged(auth, (user) => {
+      if (!user) return;
+      authReadyUser = user;
+      maybeStartPresence();
+    });
 
-      const onlineNames = [];
+    ["keydown", "mousedown", "touchstart", "pointerdown"].forEach((evt) => {
+      window.addEventListener(evt, maybeStartPresence);
+    });
 
-      for (const uid of Object.keys(users)) {
-        const u = users[uid];
-        const conns = u?.connections || {};
-
-        const active = Object.values(conns).some(
-          (c) => c?.lastSeen && now - c.lastSeen < STALE_MS
-        );
-
-        if (!active) continue;
-
-        const name = u?.profile?.username;
-        if (name) onlineNames.push(name);
-      }
-
-      const uniqueNames = [...new Set(onlineNames)];
-
-      if (onlineCountEl) {
-        onlineCountEl.textContent = `(${uniqueNames.length})`;
-      }
-
-      if (onlineUsersList) {
-        onlineUsersList.innerHTML = "";
-        uniqueNames.forEach((name) => {
-          const li = document.createElement("li");
-          li.textContent = name;
-          onlineUsersList.appendChild(li);
-        });
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") {
+        maybeStartPresence();
       }
     });
-  }
 
-  const isOwner = user.uid === OWNER_UID;
-  const loginSection = document.getElementById("owner-login-section");
-  const statusSection = document.getElementById("owner-status-section");
-  if (loginSection) loginSection.hidden = isOwner;
-  if (statusSection) statusSection.hidden = !isOwner;
+    window.addEventListener("focus", maybeStartPresence);
 
-  renderReplyComposerUI();
-  renderMessages();
+
+    // owner login UI toggle
+    const isOwner = user.uid === OWNER_UID;
+    const loginSection = document.getElementById("owner-login-section");
+    const statusSection = document.getElementById("owner-status-section");
+    if (loginSection) loginSection.hidden = isOwner;
+    if (statusSection) statusSection.hidden = !isOwner;
+
+    // render reply bar state + rerender 
+    renderReplyComposerUI();
+    renderMessages();
   });
+
 });
