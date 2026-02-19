@@ -780,64 +780,65 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  let statusUnsub = null;
+let statusUnsub = null;
 
-  onAuthStateChanged(auth, (user) => {
-    if (!user) return;
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    signInAnonymously(auth);
+    return;
+  }
 
-    if (!statusUnsub) {
-      const statusRef = ref(rtdb, "/status");
+  // ---------------- Presence ----------------
+  setupPresence(user);
 
-      statusUnsub = onValue(statusRef, (snapshot) => {
-        const users = snapshot.val() || {};
-        const now = Date.now();
-        const STALE_MS = 60_000;
+  if (!statusUnsub) {
+    const statusRef = ref(rtdb, "/status");
 
-        const onlineNames = [];
+    statusUnsub = onValue(statusRef, (snapshot) => {
+      const users = snapshot.val() || {};
+      const now = Date.now();
+      const STALE_MS = 60_000;
 
-        for (const uid of Object.keys(users)) {
-          const u = users[uid];
-          const conns = u?.connections || {};
+      const onlineNames = [];
 
-          const active = Object.values(conns).some((c) => {
-            return c?.lastSeen && now - c.lastSeen < STALE_MS;
-          });
+      for (const uid of Object.keys(users)) {
+        const u = users[uid];
+        const conns = u?.connections || {};
 
-          if (!active) continue;
+        const active = Object.values(conns).some(
+          (c) => c?.lastSeen && now - c.lastSeen < STALE_MS
+        );
 
-          const name = u?.profile?.username;
-          if (name) onlineNames.push(name);
-        }
+        if (!active) continue;
 
-        const uniqueNames = [...new Set(onlineNames)];
+        const name = u?.profile?.username;
+        if (name) onlineNames.push(name);
+      }
 
-        if (onlineCountEl) {
-          onlineCountEl.textContent = `(${uniqueNames.length})`;
-        }
+      const uniqueNames = [...new Set(onlineNames)];
 
-        if (onlineUsersList) {
-          onlineUsersList.innerHTML = "";
-          uniqueNames.forEach((name) => {
-            const li = document.createElement("li");
-            li.textContent = name;
-            onlineUsersList.appendChild(li);
-          });
-        }
-      });
-    }
+      if (onlineCountEl) {
+        onlineCountEl.textContent = `(${uniqueNames.length})`;
+      }
+
+      if (onlineUsersList) {
+        onlineUsersList.innerHTML = "";
+        uniqueNames.forEach((name) => {
+          const li = document.createElement("li");
+          li.textContent = name;
+          onlineUsersList.appendChild(li);
+        });
+      }
+    });
+  }
+
+  const isOwner = user.uid === OWNER_UID;
+  const loginSection = document.getElementById("owner-login-section");
+  const statusSection = document.getElementById("owner-status-section");
+  if (loginSection) loginSection.hidden = isOwner;
+  if (statusSection) statusSection.hidden = !isOwner;
+
+  renderReplyComposerUI();
+  renderMessages();
   });
-
-
-
-    // owner login UI toggle
-    const isOwner = user.uid === OWNER_UID;
-    const loginSection = document.getElementById("owner-login-section");
-    const statusSection = document.getElementById("owner-status-section");
-    if (loginSection) loginSection.hidden = isOwner;
-    if (statusSection) statusSection.hidden = !isOwner;
-
-    // render reply bar state + rerender 
-    renderReplyComposerUI();
-    renderMessages();
-  });
-  
+});
