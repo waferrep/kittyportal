@@ -180,6 +180,7 @@ function formatContent(rawContent) {
     formatted = formatted.replace(/\[i\](.*?)\[\/i\]/gi, "<i>$1</i>");
     formatted = formatted.replace(/\[img\](.*?)\[\/img\]/gi, '<img src="$1" style="max-width:100%;">');
     formatted = formatted.replace(/\[video\](.*?)\[\/video\]/gi, '<video src="$1" controls style="max-width:100%;"></video>');
+    formatted = formatted.replace(/\[url=(.*?)\](.*?)\[\/url\]/gi, '<a href="$1" target="_blank" rel="noopener noreferrer">$2</a>');
     formatted = formatted.replace(/\{\{MOOD:(.*?)\}\}/gi, '<img src="blog/moods/$1" class="inline-mood-icon">');
 
     return formatted;
