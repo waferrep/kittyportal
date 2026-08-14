@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const title = document.getElementById("title").value.trim();
 
         if (!confirm(`Are you sure you want to submit this blog?\n\nTitle: "${title}"`)) {
-            return; // 🚫 STOP everything if cancelled
+            return; 
         }
 
         const author = document.getElementById("author").value.trim();
