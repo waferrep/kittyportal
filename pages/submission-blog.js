@@ -230,6 +230,11 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
 
         const title = document.getElementById("title").value.trim();
+
+        if (!confirm(`Are you sure you want to submit this blog?\n\nTitle: "${title}"`)) {
+            return; // 🚫 STOP everything if cancelled
+        }
+
         const author = document.getElementById("author").value.trim();
         const content = document.getElementById("content").value.trim();
         const moodIcon = document.getElementById("mood-icon").value;
@@ -323,3 +328,39 @@ async function setupNavigation(currentId) {
     }
 }
 
+window.formatContent = formatContent;
+
+document.addEventListener("DOMContentLoaded", () => {
+    const previewBtn = document.getElementById("preview-button");
+    const modal = document.getElementById("preview-modal");
+    const closeBtn = document.getElementById("close-preview");
+
+    if (!previewBtn || !modal) {
+        console.warn("Preview elements not found");
+        return;
+    }
+
+    previewBtn.addEventListener("click", () => {
+        const title = document.getElementById("title").value.trim();
+        const author = document.getElementById("author").value.trim();
+        const moodFile = document.getElementById("mood-icon").value;
+        const rawContent = document.getElementById("content").value;
+
+        const formatted = window.formatContent(rawContent);
+
+        document.getElementById("preview-title").textContent = title || "(Untitled)";
+        document.getElementById("preview-author").textContent = author;
+        document.getElementById("preview-mood").src = `blog/moods/${moodFile}`;
+        document.getElementById("preview-content").innerHTML = formatted;
+
+        modal.style.display = "flex";
+    });
+
+    closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) modal.style.display = "none";
+    });
+});
