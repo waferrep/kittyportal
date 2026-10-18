@@ -83,8 +83,8 @@ function setupPresence(user) {
   if (stopPresence) stopPresence();
 
   const connectedRef = ref(rtdb, ".info/connected");
-  const connectionsRef = ref(rtdb, "/status/" + user.uid + "/connections");
-  const profileRef = ref(rtdb, "/status/" + user.uid + "/profile");
+  const connectionsRef = ref(rtdb, "/presence/" + user.uid + "/connections");
+  const profileRef = ref(rtdb, "/presence/" + user.uid + "/profile");
 
   let thisConnRef = null;
   let heartbeatTimer = null;
@@ -132,7 +132,7 @@ function setupPresence(user) {
 
 const onlineCountEl = document.getElementById("online-count");
 const onlineUsersList = document.getElementById("online-users");
-const statusRef = ref(rtdb, "/status");
+const statusRef = ref(rtdb, "/presence");
 
 // Connections whose heartbeat is older than this are ghosts (onDisconnect never fired).
 const STALE_MS = 60_000;
@@ -804,7 +804,7 @@ window.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("kp_username", currentUsername);
 
     if (auth.currentUser) {
-      set(ref(rtdb, "/status/" + auth.currentUser.uid + "/profile"), {
+      set(ref(rtdb, "/presence/" + auth.currentUser.uid + "/profile"), {
         username: currentUsername,
         last_changed: rtdbTimestamp()
       });
@@ -829,7 +829,7 @@ window.addEventListener("DOMContentLoaded", () => {
     try {
       // remove presence for current user before switching
       if (auth.currentUser) {
-        await remove(ref(rtdb, "/status/" + auth.currentUser.uid));
+        await remove(ref(rtdb, "/presence/" + auth.currentUser.uid));
       }
       await signInWithEmailAndPassword(auth, emailIn.value, passIn.value);
       emailIn.value = "";
@@ -842,7 +842,7 @@ window.addEventListener("DOMContentLoaded", () => {
   logoutBtn?.addEventListener("click", async () => {
     try {
       if (auth.currentUser) {
-        await remove(ref(rtdb, "/status/" + auth.currentUser.uid));
+        await remove(ref(rtdb, "/presence/" + auth.currentUser.uid));
       }
       await signOut(auth);
       await signInAnonymously(auth);
