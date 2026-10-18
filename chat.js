@@ -58,18 +58,41 @@ if (!localStorage.getItem("kp_username")) {
   localStorage.setItem("kp_username", currentUsername);
 }
 
-function setupPresence(user) {
-  const connectedRef = ref(rtdb, ".info/connected");
+const BOT_UA = /bot|crawl|spider|slurp|headless|preview|fetch|monitor|lighthouse|facebookexternalhit/i;
+const isProbablyBot = navigator.webdriver || BOT_UA.test(navigator.userAgent);
 
-  const userRef = ref(rtdb, "/status/" + user.uid);
+let stopPresence = null;
+let presenceUser = null;
+let humanSeen = false;
+
+// Crawlers load the page but never touch it, so only count visitors who interact.
+function startPresence(user) {
+  presenceUser = user;
+  if (humanSeen && !isProbablyBot) setupPresence(user);
+}
+
+["pointerdown", "keydown", "scroll", "touchstart"].forEach((evt) => {
+  window.addEventListener(evt, () => {
+    if (humanSeen) return;
+    humanSeen = true;
+    if (presenceUser && !isProbablyBot) setupPresence(presenceUser);
+  }, { passive: true });
+});
+
+function setupPresence(user) {
+  if (stopPresence) stopPresence();
+
+  const connectedRef = ref(rtdb, ".info/connected");
   const connectionsRef = ref(rtdb, "/status/" + user.uid + "/connections");
   const profileRef = ref(rtdb, "/status/" + user.uid + "/profile");
 
   let thisConnRef = null;
   let heartbeatTimer = null;
 
-  onValue(connectedRef, (snap) => {
+  const unsubscribe = onValue(connectedRef, (snap) => {
     if (snap.val() !== true) return;
+
+    if (heartbeatTimer) clearInterval(heartbeatTimer);
 
     thisConnRef = push(connectionsRef);
 
@@ -90,14 +113,16 @@ function setupPresence(user) {
       username: currentUsername,
       last_changed: rtdbTimestamp()
     });
-
-    // if this was the last connection, remove the user node
-    onDisconnect(userRef).update({
-      connections: null
-    });
   });
 
-  window.addEventListener("beforeunload", () => {
+  stopPresence = () => {
+    unsubscribe();
+    if (heartbeatTimer) clearInterval(heartbeatTimer);
+    if (thisConnRef) remove(thisConnRef);
+    stopPresence = null;
+  };
+
+  window.addEventListener("pagehide", () => {
     if (heartbeatTimer) clearInterval(heartbeatTimer);
   });
 }
@@ -109,15 +134,25 @@ const onlineCountEl = document.getElementById("online-count");
 const onlineUsersList = document.getElementById("online-users");
 const statusRef = ref(rtdb, "/status");
 
-onValue(statusRef, (snapshot) => {
-  const users = snapshot.val() || {};
+// Connections whose heartbeat is older than this are ghosts (onDisconnect never fired).
+const STALE_MS = 60_000;
+let serverOffset = 0;
+let lastStatus = {};
 
+onValue(ref(rtdb, ".info/serverTimeOffset"), (snap) => {
+  serverOffset = snap.val() || 0;
+});
+
+function renderOnline() {
+  const now = Date.now() + serverOffset;
   const onlineNames = [];
 
-  for (const uid of Object.keys(users)) {
-    const u = users[uid];
-    const hasConnections = u?.connections && Object.keys(u.connections).length > 0;
-    if (!hasConnections) continue;
+  for (const uid of Object.keys(lastStatus)) {
+    const u = lastStatus[uid];
+    const hasFresh = Object.values(u?.connections || {}).some(
+      (c) => typeof c?.lastSeen === "number" && now - c.lastSeen < STALE_MS
+    );
+    if (!hasFresh) continue;
 
     const name = u?.profile?.username;
     if (name) onlineNames.push(name);
@@ -135,7 +170,15 @@ onValue(statusRef, (snapshot) => {
       onlineUsersList.appendChild(li);
     });
   }
+}
+
+onValue(statusRef, (snapshot) => {
+  lastStatus = snapshot.val() || {};
+  renderOnline();
 });
+
+// re-check so ghosts age out even when no data changes
+setInterval(renderOnline, 15_000);
 
 
 // -------------------- Chat DOM --------------------
@@ -815,7 +858,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     // presence
-    setTimeout(() => setupPresence(user), 500);
+    startPresence(user);
 
     // owner login UI toggle
     const isOwner = user.uid === OWNER_UID;
